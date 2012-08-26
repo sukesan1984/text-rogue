@@ -2,27 +2,34 @@ RecordManager = new class
     constructor: ->
         @turn = 0
         @_records = []
+        @_rowData = []
+        @_tableView
         @_setMock()
     _setMock: ->
         RecordEnemy = require 'record/Enemy'
         RecordItem = require 'record/Item'
 
         rowData = []
+        rowObjects = []
         for i in [1...6]
-            row = new RecordEnemy()
+            if ( i <= 3 )
+                row = new RecordEnemy()
+            else
+                row = new RecordItem()
 
-            row.selectedBackgroundColor = '#fff'
-            row.height = 60
-            row.className = 'datarow'
+            rowData.push row.getRow()
+            rowObjects.push row
 
-            rowData.push row
-
-        @_records = rowData
+        @_records = rowObjects
+        @_rowData = rowData
+    setTableView: ( tableView )->
+        @_tableView = tableView
     getRecords: ->
-        return @_records
+        return @_rowData
     notifyRecords: ( func )->
         for i in @_records
-
+            i[func]( @_tableView )
+        return
     countUpTurn: ->
         @turn++
 

@@ -11,6 +11,9 @@
         check = _this.row.getHasCheck();
         return _this.row.setHasCheck(!check);
       });
+      this.row.selectedBackgroundColor = '#fff';
+      this.row.height = 60;
+      this.row.className = 'datarow';
       this.message = Ti.UI.createLabel({
         color: '#576996',
         font: {
@@ -34,17 +37,17 @@
       this.photo.rowNum = rowNum;
       this.setImage();
       this.row.add(this.photo);
-      return this.row;
+      return this;
     }
+
+    RecordBase.prototype.getRow = function() {
+      return this.row;
+    };
 
     RecordBase.prototype.action = function() {
       if (!this.row.getHasCheck()) {
 
       }
-    };
-
-    RecordBase.prototype.log = function() {
-      return console.log("hoge");
     };
 
     RecordBase.prototype._backgroundImage = function() {

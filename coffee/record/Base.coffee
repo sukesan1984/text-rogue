@@ -4,6 +4,10 @@ class RecordBase
         @row.addEventListener 'click', (e)=>
             check = @row.getHasCheck()
             @row.setHasCheck !check
+        @row.selectedBackgroundColor = '#fff'
+        @row.height = 60
+        @row.className = 'datarow'
+
         @message =  Ti.UI.createLabel
             color: '#576996'
             font:
@@ -25,11 +29,11 @@ class RecordBase
         @photo.rowNum = rowNum
         @setImage()
         @row.add @photo
+        return @
+    getRow: ->
         return @row
     action: ->
         return if ( !@row.getHasCheck() )
-    log: ->
-        console.log "hoge"
     _backgroundImage: ->
         return ''
     setImage: ->

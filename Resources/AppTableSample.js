@@ -18,6 +18,7 @@
     });
     tableView.setHeight(300);
     tableView.setTop(0);
+    RecordManager.setTableView(tableView);
     win.add(tableView);
     goButton = Ti.UI.createButton({
       systemButton: Ti.UI.iPhone.SystemButton.DONE
@@ -28,7 +29,7 @@
     goButton.setTitle("GO");
     goButton.addEventListener('click', function(e) {
       RecordManager.countUpTurn();
-      return RecordManager.notifyRecords("action");
+      RecordManager.notifyRecords("action");
     });
     win.add(goButton);
     return win;

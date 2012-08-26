@@ -17,6 +17,10 @@
       return 'images/dragon.png';
     };
 
+    RecordEnemy.prototype.hoge = function() {
+      return RecordEnemy.__super__.hoge.call(this);
+    };
+
     return RecordEnemy;
 
   })(RecordBase);

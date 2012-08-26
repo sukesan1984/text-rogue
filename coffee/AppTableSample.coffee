@@ -17,6 +17,8 @@ exports.init = ( titleStr ) ->
     tableView.setHeight(300)
     tableView.setTop(0)
 
+    RecordManager.setTableView( tableView )
+
     win.add tableView
 
     goButton = Ti.UI.createButton
@@ -29,6 +31,7 @@ exports.init = ( titleStr ) ->
     goButton.addEventListener 'click', (e)->
         RecordManager.countUpTurn()
         RecordManager.notifyRecords( "action" )
+        return
 
     win.add goButton
     return win
