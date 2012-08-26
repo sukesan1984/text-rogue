@@ -1,17 +1,15 @@
 RecordManager = new class
     constructor: ->
         @turn = 0
-
-    getRecords: ->
+        @_records = []
+        @_setMock()
+    _setMock: ->
         RecordEnemy = require 'record/Enemy'
         RecordItem = require 'record/Item'
 
         rowData = []
         for i in [1...6]
-            if i <= 3
-                row = new RecordEnemy()
-            else
-                row = new RecordItem()
+            row = new RecordEnemy()
 
             row.selectedBackgroundColor = '#fff'
             row.height = 60
@@ -19,9 +17,13 @@ RecordManager = new class
 
             rowData.push row
 
-        return rowData
+        @_records = rowData
+    getRecords: ->
+        return @_records
+    notifyRecords: ( func )->
+        for i in @_records
+
     countUpTurn: ->
-        console.log( @turn )
         @turn++
 
 module.exports = RecordManager

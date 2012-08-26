@@ -28,6 +28,7 @@ exports.init = ( titleStr ) ->
     goButton.setTitle("GO")
     goButton.addEventListener 'click', (e)->
         RecordManager.countUpTurn()
+        RecordManager.notifyRecords( "action" )
 
     win.add goButton
     return win

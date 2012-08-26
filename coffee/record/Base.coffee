@@ -26,6 +26,10 @@ class RecordBase
         @setImage()
         @row.add @photo
         return @row
+    action: ->
+        return if ( !@row.getHasCheck() )
+    log: ->
+        console.log "hoge"
     _backgroundImage: ->
         return ''
     setImage: ->

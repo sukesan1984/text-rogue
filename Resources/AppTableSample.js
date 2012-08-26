@@ -27,7 +27,8 @@
     goButton.setTop(305);
     goButton.setTitle("GO");
     goButton.addEventListener('click', function(e) {
-      return RecordManager.countUpTurn();
+      RecordManager.countUpTurn();
+      return RecordManager.notifyRecords("action");
     });
     win.add(goButton);
     return win;

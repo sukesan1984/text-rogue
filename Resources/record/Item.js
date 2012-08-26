@@ -17,6 +17,11 @@
       return 'images/hammer.png';
     };
 
+    RecordItem.prototype.action = function() {
+      RecordItem.__super__.action.call(this);
+      return this.remove();
+    };
+
     return RecordItem;
 
   })(RecordBase);

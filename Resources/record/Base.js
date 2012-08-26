@@ -37,6 +37,16 @@
       return this.row;
     }
 
+    RecordBase.prototype.action = function() {
+      if (!this.row.getHasCheck()) {
+
+      }
+    };
+
+    RecordBase.prototype.log = function() {
+      return console.log("hoge");
+    };
+
     RecordBase.prototype._backgroundImage = function() {
       return '';
     };
