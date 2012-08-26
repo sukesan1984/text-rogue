@@ -14,6 +14,7 @@
       this.row.selectedBackgroundColor = '#fff';
       this.row.height = 60;
       this.row.className = 'datarow';
+      this.row.name = "row" + rowNum;
       this.message = Ti.UI.createLabel({
         color: '#576996',
         font: {
@@ -42,6 +43,10 @@
 
     RecordBase.prototype.getRow = function() {
       return this.row;
+    };
+
+    RecordBase.prototype.getName = function() {
+      return this.row.name;
     };
 
     RecordBase.prototype.action = function() {

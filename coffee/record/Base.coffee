@@ -7,6 +7,7 @@ class RecordBase
         @row.selectedBackgroundColor = '#fff'
         @row.height = 60
         @row.className = 'datarow'
+        @row.name = "row" + rowNum
 
         @message =  Ti.UI.createLabel
             color: '#576996'
@@ -32,6 +33,8 @@ class RecordBase
         return @
     getRow: ->
         return @row
+    getName: ->
+        return @row.name
     action: ->
         return if ( !@row.getHasCheck() )
     _backgroundImage: ->

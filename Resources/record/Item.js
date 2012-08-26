@@ -17,9 +17,11 @@
       return 'images/hammer.png';
     };
 
-    RecordItem.prototype.action = function(parent) {
-      RecordItem.__super__.action.call(this);
-      return parent.deleteRow(this.row);
+    RecordItem.prototype.action = function(parent, name) {
+      if (!this.row.getHasCheck()) {
+        return;
+      }
+      return parent.deleteRow(parent.getIndexByName(name));
     };
 
     RecordItem.prototype.hoge = function() {
