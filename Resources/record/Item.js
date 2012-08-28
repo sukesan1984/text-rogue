@@ -17,15 +17,11 @@
       return 'images/hammer.png';
     };
 
-    RecordItem.prototype.action = function(parent, name) {
+    RecordItem.prototype.action = function() {
       if (!this.row.getHasCheck()) {
         return;
       }
-      return parent.deleteRow(parent.getIndexByName(name));
-    };
-
-    RecordItem.prototype.hoge = function() {
-      return RecordItem.__super__.hoge.call(this);
+      return this.row.deleteFromParentTableView();
     };
 
     return RecordItem;

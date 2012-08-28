@@ -1,61 +1,50 @@
 (function() {
-  var RecordManager;
+  var ETableView, RecordEnemy, RecordItem, RecordManager;
+
+  ETableView = require('ui/ETableView');
+
+  RecordEnemy = require('record/Enemy');
+
+  RecordItem = require('record/Item');
 
   RecordManager = new ((function() {
 
     function _Class() {
       this.turn = 0;
       this._index = 0;
-      this._records = [];
       this._rowData = [];
-      this._tableView;
+      this._tableView = new ETableView(this);
       this._setMock();
     }
 
     _Class.prototype._setMock = function() {
-      var RecordEnemy, RecordItem, i, index, row, rowData, rowObjects, _i;
-      RecordEnemy = require('record/Enemy');
-      RecordItem = require('record/Item');
+      var i, row, rowData, _i;
       rowData = [];
-      rowObjects = [];
       for (i = _i = 1; _i < 6; i = ++_i) {
-        index = this.getIndex();
         if (i <= 3) {
-          row = new RecordEnemy(index);
+          row = new RecordEnemy(this._tableView);
         } else {
-          row = new RecordItem(index);
+          row = new RecordItem(this._tableView);
         }
-        this._incrementIndex();
-        rowData.push(row.getRow());
-        rowObjects.push(row);
+        rowData.push(row);
+        this._tableView.appendRow(row.get());
       }
-      this._records = rowObjects;
       return this._rowData = rowData;
     };
 
-    _Class.prototype.getIndex = function() {
-      return this._index;
-    };
-
-    _Class.prototype._incrementIndex = function() {
-      return this._index++;
-    };
-
-    _Class.prototype.setTableView = function(tableView) {
-      return this._tableView = tableView;
-    };
-
-    _Class.prototype.getRecords = function() {
-      return this._rowData;
-    };
-
-    _Class.prototype.notifyRecords = function(func) {
-      var i, _i, _len, _ref;
-      _ref = this._records;
+    _Class.prototype.notify = function(func) {
+      var i, _i, _len, _ref, _results;
+      _ref = this._rowData;
+      _results = [];
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
         i = _ref[_i];
-        i[func](this._tableView, i.getName());
+        _results.push(i[func]());
       }
+      return _results;
+    };
+
+    _Class.prototype.getTableView = function() {
+      return this._tableView.getObject();
     };
 
     _Class.prototype.countUpTurn = function() {

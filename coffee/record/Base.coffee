@@ -1,13 +1,10 @@
+ETableViewRow = require 'ui/ETableViewRow'
 class RecordBase
-    constructor: (rowNum) ->
-        @row = Ti.UI.createTableViewRow()
+    constructor: (parent) ->
+        @row = new ETableViewRow( parent )
         @row.addEventListener 'click', (e)=>
             check = @row.getHasCheck()
             @row.setHasCheck !check
-        @row.selectedBackgroundColor = '#fff'
-        @row.height = 60
-        @row.className = 'datarow'
-        @row.name = "row" + rowNum
 
         @message =  Ti.UI.createLabel
             color: '#576996'
@@ -19,7 +16,6 @@ class RecordBase
             top: 2
             height: 30
             width: 200
-        @message.rowNum = rowNum
         @row.add @message
 
         @photo = Ti.UI.createView
@@ -27,12 +23,11 @@ class RecordBase
             left: 10
             width: 50
             height: 50
-        @photo.rowNum = rowNum
         @setImage()
         @row.add @photo
         return @
-    getRow: ->
-        return @row
+    get: ->
+        return @row.getObject()
     getName: ->
         return @row.name
     action: ->

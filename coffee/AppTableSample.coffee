@@ -9,16 +9,7 @@ exports.init = ( titleStr ) ->
 
     RecordManager = require 'record/Manager'
 
-    rowData = RecordManager.getRecords()
-
-    tableView = Ti.UI.createTableView
-        data: rowData
-        seach: searchBar
-    tableView.setHeight(300)
-    tableView.setTop(0)
-
-    RecordManager.setTableView( tableView )
-
+    tableView = RecordManager.getTableView()
     win.add tableView
 
     goButton = Ti.UI.createButton
@@ -30,7 +21,7 @@ exports.init = ( titleStr ) ->
     goButton.setTitle("GO")
     goButton.addEventListener 'click', (e)->
         RecordManager.countUpTurn()
-        RecordManager.notifyRecords( "action" )
+        RecordManager.notify( "action" )
         return
 
     win.add goButton

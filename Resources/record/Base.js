@@ -1,20 +1,18 @@
 (function() {
-  var RecordBase;
+  var ETableViewRow, RecordBase;
+
+  ETableViewRow = require('ui/ETableViewRow');
 
   RecordBase = (function() {
 
-    function RecordBase(rowNum) {
+    function RecordBase(parent) {
       var _this = this;
-      this.row = Ti.UI.createTableViewRow();
+      this.row = new ETableViewRow(parent);
       this.row.addEventListener('click', function(e) {
         var check;
         check = _this.row.getHasCheck();
         return _this.row.setHasCheck(!check);
       });
-      this.row.selectedBackgroundColor = '#fff';
-      this.row.height = 60;
-      this.row.className = 'datarow';
-      this.row.name = "row" + rowNum;
       this.message = Ti.UI.createLabel({
         color: '#576996',
         font: {
@@ -27,7 +25,6 @@
         height: 30,
         width: 200
       });
-      this.message.rowNum = rowNum;
       this.row.add(this.message);
       this.photo = Ti.UI.createView({
         top: 5,
@@ -35,14 +32,13 @@
         width: 50,
         height: 50
       });
-      this.photo.rowNum = rowNum;
       this.setImage();
       this.row.add(this.photo);
       return this;
     }
 
-    RecordBase.prototype.getRow = function() {
-      return this.row;
+    RecordBase.prototype.get = function() {
+      return this.row.getObject();
     };
 
     RecordBase.prototype.getName = function() {

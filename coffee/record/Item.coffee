@@ -2,9 +2,7 @@ RecordBase = require 'record/Base'
 class RecordItem extends RecordBase
     _backgroundImage: ->
         return 'images/hammer.png'
-    action: ( parent, name )->
+    action: ->
         return if ( !@row.getHasCheck() )
-        parent.deleteRow( parent.getIndexByName(name) )
-    hoge: ->
-        super()
+        @row.deleteFromParentTableView()
 module.exports = RecordItem

@@ -1,7 +1,7 @@
 (function() {
 
   exports.init = function(titleStr) {
-    var RecordManager, goButton, rowData, searchBar, tableView, win;
+    var RecordManager, goButton, searchBar, tableView, win;
     win = Ti.UI.createWindow({
       title: titleStr,
       backgroundColor: '#FFFFFF'
@@ -11,14 +11,7 @@
       showCancel: false
     });
     RecordManager = require('record/Manager');
-    rowData = RecordManager.getRecords();
-    tableView = Ti.UI.createTableView({
-      data: rowData,
-      seach: searchBar
-    });
-    tableView.setHeight(300);
-    tableView.setTop(0);
-    RecordManager.setTableView(tableView);
+    tableView = RecordManager.getTableView();
     win.add(tableView);
     goButton = Ti.UI.createButton({
       systemButton: Ti.UI.iPhone.SystemButton.DONE
@@ -29,7 +22,7 @@
     goButton.setTitle("GO");
     goButton.addEventListener('click', function(e) {
       RecordManager.countUpTurn();
-      RecordManager.notifyRecords("action");
+      RecordManager.notify("action");
     });
     win.add(goButton);
     return win;
