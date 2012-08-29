@@ -1,11 +1,11 @@
 (function() {
-  var ETableView, RecordEnemy, RecordItem, RecordManager;
+  var ETableView, ModelRecords, RecordFactory, RecordManager;
 
   ETableView = require('ui/ETableView');
 
-  RecordEnemy = require('record/Enemy');
+  ModelRecords = require('model/Records');
 
-  RecordItem = require('record/Item');
+  RecordFactory = require('record/Factory');
 
   RecordManager = new ((function() {
 
@@ -18,16 +18,21 @@
     }
 
     _Class.prototype._setMock = function() {
-      var i, row, rowData, _i;
-      rowData = [];
+      var i, r, row, rowData, rows, _i, _j, _len;
       for (i = _i = 1; _i < 6; i = ++_i) {
         if (i <= 3) {
-          row = new RecordEnemy(this._tableView);
+          ModelRecords.insert(i, 1);
         } else {
-          row = new RecordItem(this._tableView);
+          ModelRecords.insert(i, 2);
         }
-        rowData.push(row);
-        this._tableView.appendRow(row.get());
+      }
+      rowData = [];
+      rows = ModelRecords.get_all();
+      for (_j = 0, _len = rows.length; _j < _len; _j++) {
+        row = rows[_j];
+        r = RecordFactory.get(this._tableView, row.id, row.type);
+        rowData.push(r);
+        this._tableView.appendRow(r.get());
       }
       return this._rowData = rowData;
     };

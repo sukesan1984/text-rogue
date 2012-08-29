@@ -1,6 +1,6 @@
 ETableView = require 'ui/ETableView'
-RecordEnemy = require 'record/Enemy'
-RecordItem = require 'record/Item'
+ModelRecords = require 'model/Records'
+RecordFactory = require 'record/Factory'
 
 RecordManager = new class
     constructor: ->
@@ -10,16 +10,18 @@ RecordManager = new class
         @_tableView = new ETableView( @ )
         @_setMock()
     _setMock: ->
-        rowData = []
         for i in [1...6]
             if ( i <= 3 )
-                row = new RecordEnemy( @_tableView )
+                ModelRecords.insert( i, 1)
             else
-                row = new RecordItem( @_tableView )
+                ModelRecords.insert( i, 2)
 
-            rowData.push row
-            @_tableView.appendRow( row.get() )
-
+        rowData = []
+        rows = ModelRecords.get_all()
+        for row in rows
+            r = RecordFactory.get( @_tableView, row.id, row.type )
+            rowData.push r
+            @_tableView.appendRow( r.get() )
         @_rowData = rowData
 
     notify: ( func ) ->

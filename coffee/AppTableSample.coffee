@@ -6,7 +6,6 @@ exports.init = ( titleStr ) ->
         barColor: '#385292'
         showCancel: false
 
-
     RecordManager = require 'record/Manager'
 
     tableView = RecordManager.getTableView()
