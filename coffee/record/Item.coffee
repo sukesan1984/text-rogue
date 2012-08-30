@@ -6,5 +6,9 @@ class RecordItem extends RecordBase
         return if ( !@row.getHasCheck() )
         #@row.deleteFromParentTableView()
         @model.delete( @id )
+        dialog = Titanium.UI.createAlertDialog()
+        dialog.setTitle('GET')
+        dialog.setMessage('アイテムをげっとした')
+        dialog.show()
 
 module.exports = RecordItem

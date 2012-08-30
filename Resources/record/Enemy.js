@@ -17,8 +17,16 @@
       return 'images/dragon.png';
     };
 
-    RecordEnemy.prototype.hoge = function() {
-      return RecordEnemy.__super__.hoge.call(this);
+    RecordEnemy.prototype.action = function() {
+      var dialog;
+      if (!this.row.getHasCheck()) {
+        return;
+      }
+      this.model["delete"](this.id);
+      dialog = Titanium.UI.createAlertDialog();
+      dialog.setTitle('YEAHHHHH');
+      dialog.setMessage('敵を倒した。');
+      return dialog.show();
     };
 
     return RecordEnemy;

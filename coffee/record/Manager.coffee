@@ -11,12 +11,14 @@ RecordManager = new class
         @_tableView = new ETableView( @ )
         @_setMock()
     _setMock: ->
-        for i in [1...6]
-            if ( i <= 3 )
-                ModelRecords.insert( @_index, 1)
-            else
-                ModelRecords.insert( @_index, 2)
-            @_index++
+        rand = parseInt(Math.random()*100)
+        if ( rand <= 10 )
+            ModelRecords.insert( @_index, 1)
+        else if( rand <= 60)
+            ModelRecords.insert( @_index, 2)
+        else
+
+        @_index++
         @reload()
 
     notify: ( func ) ->

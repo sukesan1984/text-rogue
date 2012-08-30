@@ -19,15 +19,16 @@
     }
 
     _Class.prototype._setMock = function() {
-      var i, _i;
-      for (i = _i = 1; _i < 6; i = ++_i) {
-        if (i <= 3) {
-          ModelRecords.insert(this._index, 1);
-        } else {
-          ModelRecords.insert(this._index, 2);
-        }
-        this._index++;
+      var rand;
+      rand = parseInt(Math.random() * 100);
+      if (rand <= 10) {
+        ModelRecords.insert(this._index, 1);
+      } else if (rand <= 60) {
+        ModelRecords.insert(this._index, 2);
+      } else {
+
       }
+      this._index++;
       return this.reload();
     };
 

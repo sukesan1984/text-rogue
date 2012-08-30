@@ -18,10 +18,15 @@
     };
 
     RecordItem.prototype.action = function() {
+      var dialog;
       if (!this.row.getHasCheck()) {
         return;
       }
-      return this.model["delete"](this.id);
+      this.model["delete"](this.id);
+      dialog = Titanium.UI.createAlertDialog();
+      dialog.setTitle('GET');
+      dialog.setMessage('アイテムをげっとした');
+      return dialog.show();
     };
 
     return RecordItem;
