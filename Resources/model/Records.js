@@ -6,8 +6,8 @@
     function _Class() {
       var db;
       db = Ti.Database.open('mydb');
-      db.execute('DELETE FROM record_data');
       db.execute('CREATE TABLE IF NOT EXISTS record_data ( id integer, type integer )');
+      db.execute('DELETE FROM record_data');
       db.close;
     }
 
@@ -15,7 +15,13 @@
       var db;
       db = Ti.Database.open('mydb');
       db.execute('INSERT INTO record_data (id, type) values ( ?, ? )', id, type);
-      return db.close;
+      return db.close();
+    };
+
+    _Class.prototype["delete"] = function(id) {
+      var db;
+      db = Ti.Database.open('mydb');
+      return db.execute("DELETE FROM record_data where id = ?", id);
     };
 
     _Class.prototype.get_all = function() {

@@ -1,11 +1,13 @@
 (function() {
-  var ETableViewRow, RecordBase;
+  var ETableViewRow, ModelRecords, RecordBase;
 
   ETableViewRow = require('ui/ETableViewRow');
 
+  ModelRecords = require('model/Records');
+
   RecordBase = (function() {
 
-    function RecordBase(parent) {
+    function RecordBase(parent, id) {
       var _this = this;
       this.row = new ETableViewRow(parent);
       this.row.addEventListener('click', function(e) {
@@ -13,6 +15,8 @@
         check = _this.row.getHasCheck();
         return _this.row.setHasCheck(!check);
       });
+      this.model = ModelRecords;
+      this.id = id;
       this.message = Ti.UI.createLabel({
         color: '#576996',
         font: {

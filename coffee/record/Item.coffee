@@ -4,5 +4,7 @@ class RecordItem extends RecordBase
         return 'images/hammer.png'
     action: ->
         return if ( !@row.getHasCheck() )
-        @row.deleteFromParentTableView()
+        #@row.deleteFromParentTableView()
+        @model.delete( @id )
+
 module.exports = RecordItem

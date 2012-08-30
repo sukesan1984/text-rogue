@@ -1,10 +1,14 @@
 ETableViewRow = require 'ui/ETableViewRow'
+ModelRecords = require 'model/Records'
+
 class RecordBase
-    constructor: (parent) ->
+    constructor: ( parent, id ) ->
         @row = new ETableViewRow( parent )
         @row.addEventListener 'click', (e)=>
             check = @row.getHasCheck()
             @row.setHasCheck !check
+        @model = ModelRecords
+        @id = id
 
         @message =  Ti.UI.createLabel
             color: '#576996'

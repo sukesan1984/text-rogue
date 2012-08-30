@@ -21,6 +21,8 @@ exports.init = ( titleStr ) ->
     goButton.addEventListener 'click', (e)->
         RecordManager.countUpTurn()
         RecordManager.notify( "action" )
+        RecordManager.reload()
+        RecordManager._setMock()
         return
 
     win.add goButton

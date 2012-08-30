@@ -12,11 +12,11 @@
     _Class.prototype.get = function(parent, id, type) {
       switch (type) {
         case 1:
-          return new RecordEnemy(parent);
+          return new RecordEnemy(parent, id);
         case 2:
-          return new RecordItem(parent);
+          return new RecordItem(parent, id);
         default:
-          return new RecordEnemy(parent);
+          return new RecordEnemy(parent, id);
       }
     };
 

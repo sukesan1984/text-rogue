@@ -23,6 +23,8 @@
     goButton.addEventListener('click', function(e) {
       RecordManager.countUpTurn();
       RecordManager.notify("action");
+      RecordManager.reload();
+      RecordManager._setMock();
     });
     win.add(goButton);
     return win;

@@ -21,7 +21,7 @@
       if (!this.row.getHasCheck()) {
         return;
       }
-      return this.row.deleteFromParentTableView();
+      return this.model["delete"](this.id);
     };
 
     return RecordItem;
