@@ -1,17 +1,20 @@
 (function() {
-  var StatusView;
+  var ModelChara, StatusView;
+
+  ModelChara = require('model/Chara');
 
   StatusView = (function() {
 
     function StatusView() {
       var _this = this;
       this._statusView = Ti.UI.createView({
-        backgroundColor: 'red',
         height: 30,
         top: 0,
         left: 0,
         right: 0
       });
+      this._set_name();
+      this._set_hp();
       this._pushed = false;
       this._clickObserver = [];
       this._statusView.addEventListener('click', function(e) {
@@ -19,6 +22,45 @@
       });
       return this;
     }
+
+    StatusView.prototype._set_name = function() {
+      this._name = Ti.UI.createLabel({
+        color: '#576996',
+        backgroundColor: 'red',
+        font: {
+          fontSize: 16,
+          fontWeight: 'bold',
+          fontFamily: 'Arial'
+        },
+        left: 5,
+        top: 1,
+        height: 30,
+        width: 'auto',
+        text: ModelChara.get().name
+      });
+      return this._statusView.add(this._name);
+    };
+
+    StatusView.prototype._set_hp = function() {
+      var text;
+      this._hp = Ti.UI.createLabel({
+        color: '#576996',
+        backgroundColor: 'blue',
+        font: {
+          fontSize: 16,
+          fontWeight: 'bold',
+          fontFamily: 'Arial'
+        },
+        right: 0,
+        top: 1,
+        height: 30,
+        textAlign: Ti.UI.TEXT_ALIGNMENT_RIGHT,
+        width: 200
+      });
+      text = ModelChara.get().hp_remain + "/" + ModelChara.get().hp_max;
+      this._hp.setText(text);
+      return this._statusView.add(this._hp);
+    };
 
     StatusView.prototype.appendedTo = function(win) {
       return win.add(this._statusView);
