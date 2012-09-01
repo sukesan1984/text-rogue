@@ -14,7 +14,7 @@
     }
 
     RecordItem.prototype._backgroundImage = function() {
-      return 'images/hammer.png';
+      return 'images/sword.png';
     };
 
     RecordItem.prototype.action = function() {
