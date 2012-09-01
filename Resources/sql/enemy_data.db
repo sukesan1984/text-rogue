@@ -1,0 +1,7 @@
+CREATE TABLE IF NOT EXISTS
+  enemy_data(
+    id INT(10) UNSIGNED NOT NULL,
+    enemy_id INT(10) UNSIGNED NOT NULL,
+    hp_remain INT(10) UNSIGNED NOT NULL,
+    status INT(10) UNSIGNED NOT NULL
+  );

@@ -1,7 +1,7 @@
 (function() {
-  var ModelRecords, RecordController, RecordFactory;
+  var ModelFactory, RecordController, RecordFactory;
 
-  ModelRecords = require('model/Records');
+  ModelFactory = require('model/Factory');
 
   RecordFactory = require('record/Factory');
 
@@ -17,12 +17,13 @@
     }
 
     RecordController.prototype._setMock = function() {
-      var rand;
+      var modelRecords, rand;
       rand = parseInt(Math.random() * 100);
+      modelRecords = ModelFactory.get("Records");
       if (rand <= 10) {
-        ModelRecords.insert(this._index, 1);
+        modelRecords.insert(this._index, 1);
       } else if (rand <= 60) {
-        ModelRecords.insert(this._index, 2);
+        modelRecords.insert(this._index, 2);
       } else {
 
       }
@@ -42,11 +43,12 @@
     };
 
     RecordController.prototype.reload = function() {
-      var r, row, rowData, rowObjects, rows, _i, _len;
+      var modelRecords, r, row, rowData, rowObjects, rows, _i, _len;
       rowData = [];
       rowObjects = [];
       this._view.deleteAll(this._rowData);
-      rows = ModelRecords.get_all();
+      modelRecords = ModelFactory.get("Records");
+      rows = modelRecords.get_all();
       for (_i = 0, _len = rows.length; _i < _len; _i++) {
         row = rows[_i];
         r = RecordFactory.get(row.id, row.type);

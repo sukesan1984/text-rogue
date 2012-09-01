@@ -1,5 +1,5 @@
 ETableViewRow = require 'ui/ETableViewRow'
-ModelRecords = require 'model/Records'
+ModelFactory = require 'model/Factory'
 
 class RecordBase
     constructor: ( id ) ->
@@ -7,7 +7,7 @@ class RecordBase
         @row.addEventListener 'click', (e)=>
             check = @row.getHasCheck()
             @row.setHasCheck !check
-        @model = ModelRecords
+        @model = ModelFactory.get( "ModelRecords" )
         @id = id
 
         @message =  Ti.UI.createLabel

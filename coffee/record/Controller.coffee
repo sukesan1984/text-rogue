@@ -1,4 +1,4 @@
-ModelRecords = require 'model/Records'
+ModelFactory = require 'model/Factory'
 RecordFactory = require 'record/Factory'
 
 class RecordController
@@ -12,10 +12,11 @@ class RecordController
 
     _setMock: ->
         rand = parseInt(Math.random()*100)
+        modelRecords = ModelFactory.get( "Records" )
         if ( rand <= 10 )
-            ModelRecords.insert( @_index, 1)
+            modelRecords.insert( @_index, 1)
         else if( rand <= 60)
-            ModelRecords.insert( @_index, 2)
+            modelRecords.insert( @_index, 2)
         else
 
         @_index++
@@ -31,7 +32,8 @@ class RecordController
 
         @_view.deleteAll( @_rowData )
 
-        rows = ModelRecords.get_all()
+        modelRecords = ModelFactory.get( "Records" )
+        rows = modelRecords.get_all()
         for row in rows
             r = RecordFactory.get( row.id, row.type )
             rowData.push r.get()

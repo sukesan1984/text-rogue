@@ -1,9 +1,9 @@
 (function() {
-  var ETableViewRow, ModelRecords, RecordBase;
+  var ETableViewRow, ModelFactory, RecordBase;
 
   ETableViewRow = require('ui/ETableViewRow');
 
-  ModelRecords = require('model/Records');
+  ModelFactory = require('model/Factory');
 
   RecordBase = (function() {
 
@@ -15,7 +15,7 @@
         check = _this.row.getHasCheck();
         return _this.row.setHasCheck(!check);
       });
-      this.model = ModelRecords;
+      this.model = ModelFactory.get("ModelRecords");
       this.id = id;
       this.message = Ti.UI.createLabel({
         color: '#576996',
