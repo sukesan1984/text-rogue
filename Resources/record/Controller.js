@@ -10,24 +10,24 @@
     function RecordController(view) {
       this._view = view;
       this._turn = 0;
-      this._index = 0;
       this._rowData = [];
       this._rowObjects = [];
       this._setMock();
     }
 
     RecordController.prototype._setMock = function() {
-      var modelRecords, rand;
+      var id, modelRecords, modelSeq, rand;
       rand = parseInt(Math.random() * 100);
       modelRecords = ModelFactory.get("Records");
+      modelSeq = ModelFactory.get("FieldSequencial");
+      id = modelSeq.get();
       if (rand <= 10) {
-        modelRecords.insert(this._index, 1);
+        modelRecords.insert(id, 1);
       } else if (rand <= 60) {
-        modelRecords.insert(this._index, 2);
+        modelRecords.insert(id, 2);
       } else {
 
       }
-      this._index++;
       return this.reload();
     };
 

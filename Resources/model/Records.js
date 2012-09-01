@@ -10,24 +10,26 @@
     __extends(Records, _super);
 
     function Records() {
-      this.execute('CREATE TABLE IF NOT EXISTS record_data ( id integer, type integer )');
-      this.execute('DELETE FROM record_data');
+      var sql;
+      sql = 'CREATE TABLE IF NOT EXISTS\nfield_data (\n    id integer\n    , type integer\n)';
+      this.execute(sql);
+      this.execute('DELETE FROM field_data');
       this.close();
     }
 
     Records.prototype.insert = function(id, type) {
-      this.execute('INSERT INTO record_data (id, type) values ( ?, ? )', id, type);
+      this.execute('INSERT INTO field_data (id, type) values ( ?, ? )', id, type);
       return this.close();
     };
 
     Records.prototype["delete"] = function(id) {
-      this.execute("DELETE FROM record_data where id = ?", id);
+      this.execute("DELETE FROM field_data where id = ?", id);
       return this.close();
     };
 
     Records.prototype.get_all = function() {
       var result, rows;
-      rows = this.execute('SELECT id, type FROM record_data');
+      rows = this.execute('SELECT id, type FROM field_data');
       result = [];
       while (rows.isValidRow()) {
         result.push({

@@ -1,7 +1,13 @@
 (function() {
-  var ModelFactory, Records;
+  var Enemy, EnemyMaster, FieldSequencial, ModelFactory, Records;
 
   Records = require('model/Records');
+
+  Enemy = require('model/Enemy');
+
+  EnemyMaster = require('model/EnemyMaster');
+
+  FieldSequencial = require('model/FieldSequencial');
 
   ModelFactory = new ((function() {
 
@@ -16,6 +22,15 @@
       switch (name) {
         case "Records":
           this._models[name] = new Records();
+          break;
+        case "Enemy":
+          this._models[name] = new Enemy();
+          break;
+        case "EnemyMaster":
+          this._models[name] = new EnemyMaster();
+          break;
+        case "FieldSequencial":
+          this._models[name] = new FieldSequencial();
           break;
         default:
           this._models[name] = new Records();

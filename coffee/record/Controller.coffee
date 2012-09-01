@@ -5,7 +5,6 @@ class RecordController
     constructor: ( view )->
         @_view = view
         @_turn = 0
-        @_index = 0
         @_rowData = []
         @_rowObjects = []
         @_setMock()
@@ -13,13 +12,14 @@ class RecordController
     _setMock: ->
         rand = parseInt(Math.random()*100)
         modelRecords = ModelFactory.get( "Records" )
+        modelSeq = ModelFactory.get( "FieldSequencial" )
+        id = modelSeq.get()
         if ( rand <= 10 )
-            modelRecords.insert( @_index, 1)
+            modelRecords.insert( id, 1)
         else if( rand <= 60)
-            modelRecords.insert( @_index, 2)
+            modelRecords.insert( id, 2)
         else
 
-        @_index++
         @reload()
 
     notify: ( func ) ->
