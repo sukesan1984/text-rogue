@@ -16,12 +16,17 @@
     }
 
     RecordController.prototype._setMock = function() {
-      var id, modelRecords, modelSeq, rand;
+      var e_master, enemy_id, id, modelEnemyData, modelEnemyMaster, modelRecords, modelSeq, rand;
       rand = parseInt(Math.random() * 100);
       modelRecords = ModelFactory.get("Records");
       modelSeq = ModelFactory.get("FieldSequencial");
       id = modelSeq.get();
       if (rand <= 10) {
+        enemy_id = 1;
+        modelEnemyMaster = ModelFactory.get("EnemyMaster");
+        e_master = modelEnemyMaster.get_by_id(enemy_id);
+        modelEnemyData = ModelFactory.get("Enemy");
+        modelEnemyData.insert(id, e_master);
         modelRecords.insert(id, 1);
       } else if (rand <= 60) {
         modelRecords.insert(id, 2);
@@ -51,7 +56,7 @@
       rows = modelRecords.get_all();
       for (_i = 0, _len = rows.length; _i < _len; _i++) {
         row = rows[_i];
-        r = RecordFactory.get(row.id, row.type);
+        r = RecordFactory.get(row);
         rowData.push(r.get());
         rowObjects.push(r);
       }

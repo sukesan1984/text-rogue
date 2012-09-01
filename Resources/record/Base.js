@@ -7,7 +7,7 @@
 
   RecordBase = (function() {
 
-    function RecordBase(id) {
+    function RecordBase(row) {
       var _this = this;
       this.row = new ETableViewRow();
       this.row.addEventListener('click', function(e) {
@@ -16,7 +16,7 @@
         return _this.row.setHasCheck(!check);
       });
       this.model = ModelFactory.get("ModelRecords");
-      this.id = id;
+      this.id = row.id;
       this.message = Ti.UI.createLabel({
         color: '#576996',
         font: {

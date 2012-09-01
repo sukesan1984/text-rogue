@@ -15,6 +15,11 @@ class RecordController
         modelSeq = ModelFactory.get( "FieldSequencial" )
         id = modelSeq.get()
         if ( rand <= 10 )
+            enemy_id = 1
+            modelEnemyMaster = ModelFactory.get("EnemyMaster")
+            e_master = modelEnemyMaster.get_by_id( enemy_id )
+            modelEnemyData = ModelFactory.get("Enemy")
+            modelEnemyData.insert(id, e_master )
             modelRecords.insert( id, 1)
         else if( rand <= 60)
             modelRecords.insert( id, 2)
@@ -35,7 +40,7 @@ class RecordController
         modelRecords = ModelFactory.get( "Records" )
         rows = modelRecords.get_all()
         for row in rows
-            r = RecordFactory.get( row.id, row.type )
+            r = RecordFactory.get( row )
             rowData.push r.get()
             rowObjects.push r
         @_rowData = rowData

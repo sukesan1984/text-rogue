@@ -2,13 +2,13 @@ ETableViewRow = require 'ui/ETableViewRow'
 ModelFactory = require 'model/Factory'
 
 class RecordBase
-    constructor: ( id ) ->
+    constructor: ( row ) ->
         @row = new ETableViewRow()
         @row.addEventListener 'click', (e)=>
             check = @row.getHasCheck()
             @row.setHasCheck !check
         @model = ModelFactory.get( "ModelRecords" )
-        @id = id
+        @id = row.id
 
         @message =  Ti.UI.createLabel
             color: '#576996'

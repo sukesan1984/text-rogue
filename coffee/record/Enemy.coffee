@@ -1,10 +1,16 @@
 RecordBase = require 'record/Base'
+ModelFactory = require 'model/Factory'
 class RecordEnemy extends RecordBase
+    constructor: ( row )->
+        @modelEnemyData = ModelFactory.get("Enemy")
+        @enemy_data = @modelEnemyData.get_by_id( row.id )
+        @modelEnemyMaster = ModelFactory.get("EnemyMaster")
+        @enemy_master = @modelEnemyMaster.get_by_id( @enemy_data.enemy_id )
+        return super( row )
     _backgroundImage: ->
-        return 'images/dragon.png'
+        return @enemy_master.image
     action: ->
         return if ( !@row.getHasCheck() )
-        #@row.deleteFromParentTableView()
         @model.delete( @id )
         dialog = Titanium.UI.createAlertDialog()
         dialog.setTitle('YEAHHHHH')
