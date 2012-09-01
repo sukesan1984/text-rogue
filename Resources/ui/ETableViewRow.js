@@ -3,8 +3,7 @@
 
   ETableViewRow = (function() {
 
-    function ETableViewRow(parent) {
-      this._parent = parent;
+    function ETableViewRow() {
       this.table_view_row = Ti.UI.createTableViewRow();
       return this;
     }
@@ -15,10 +14,6 @@
 
     ETableViewRow.prototype.remove = function(child) {
       return this.table_view_row.remove(child);
-    };
-
-    ETableViewRow.prototype.deleteFromParentTableView = function() {
-      return this._parent.deleteRow(this.table_view_row);
     };
 
     ETableViewRow.prototype.setHasCheck = function(hasCheck) {

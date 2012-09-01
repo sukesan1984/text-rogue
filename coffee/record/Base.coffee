@@ -2,8 +2,8 @@ ETableViewRow = require 'ui/ETableViewRow'
 ModelRecords = require 'model/Records'
 
 class RecordBase
-    constructor: ( parent, id ) ->
-        @row = new ETableViewRow( parent )
+    constructor: ( id ) ->
+        @row = new ETableViewRow()
         @row.addEventListener 'click', (e)=>
             check = @row.getHasCheck()
             @row.setHasCheck !check

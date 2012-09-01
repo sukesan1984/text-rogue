@@ -7,9 +7,9 @@
 
   RecordBase = (function() {
 
-    function RecordBase(parent, id) {
+    function RecordBase(id) {
       var _this = this;
-      this.row = new ETableViewRow(parent);
+      this.row = new ETableViewRow();
       this.row.addEventListener('click', function(e) {
         var check;
         check = _this.row.getHasCheck();

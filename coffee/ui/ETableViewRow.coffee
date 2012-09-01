@@ -1,14 +1,11 @@
 class ETableViewRow
-    constructor: ( parent ) ->
-        @_parent = parent
+    constructor: () ->
         @table_view_row = Ti.UI.createTableViewRow()
         return @
     add: ( child ) ->
         @table_view_row.add child
     remove: ( child ) ->
         @table_view_row.remove child
-    deleteFromParentTableView: ->
-        @_parent.deleteRow ( @table_view_row )
     setHasCheck: ( hasCheck ) ->
         return if ( hasCheck is ( true | false ) )
         @table_view_row.setHasCheck hasCheck

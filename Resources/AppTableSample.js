@@ -1,37 +1,23 @@
 (function() {
 
   exports.init = function(titleStr) {
-    var RecordManager, goButton, pushed, statusView, tableView, win;
+    var DungeonLogView, RecordController, StatusView, dungeonLogView, goButton, recordController, statusView, win,
+      _this = this;
     win = Ti.UI.createWindow({
       backgroundColor: '#FFFFFF'
     });
     win.hideNavBar();
-    RecordManager = require('record/Manager');
-    tableView = RecordManager.getTableView();
-    tableView.top = 30;
-    tableView.setRowHeight(60);
-    tableView.setHeight(300);
-    win.add(tableView);
-    statusView = Ti.UI.createView({
-      backgroundColor: 'red',
-      height: 30,
-      top: 0,
-      left: 0,
-      right: 0
+    RecordController = require('record/Controller');
+    DungeonLogView = require('ui/DungeonLogView');
+    dungeonLogView = new DungeonLogView();
+    dungeonLogView.appendedTo(win);
+    recordController = new RecordController(dungeonLogView);
+    StatusView = require('ui/StatusView');
+    statusView = new StatusView();
+    statusView.appendedTo(win);
+    statusView.addObserver('click', function(e, pushed) {
+      return dungeonLogView.onClick(e, pushed);
     });
-    pushed = false;
-    statusView.addEventListener('click', function(e) {
-      if (pushed === false) {
-        statusView.setHeight(100);
-        tableView.setTop(100);
-        return pushed = true;
-      } else {
-        statusView.setHeight(30);
-        tableView.setTop(30);
-        return pushed = false;
-      }
-    });
-    win.add(statusView);
     goButton = Ti.UI.createButton({
       systemButton: Ti.UI.iPhone.SystemButton.DONE,
       height: 50,
@@ -40,10 +26,10 @@
       title: "GO"
     });
     goButton.addEventListener('click', function(e) {
-      RecordManager.countUpTurn();
-      RecordManager.notify("action");
-      RecordManager.reload();
-      RecordManager._setMock();
+      recordController.countUpTurn();
+      recordController.notify("action");
+      recordController.reload();
+      recordController._setMock();
     });
     win.add(goButton);
     return win;
