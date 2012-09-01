@@ -15,6 +15,7 @@
       });
       this._set_name();
       this._set_hp();
+      this._set_equipment();
       this._pushed = false;
       this._clickObserver = [];
       this._statusView.addEventListener('click', function(e) {
@@ -26,7 +27,6 @@
     StatusView.prototype._set_name = function() {
       this._name = Ti.UI.createLabel({
         color: '#576996',
-        backgroundColor: 'red',
         font: {
           fontSize: 16,
           fontWeight: 'bold',
@@ -45,21 +45,105 @@
       var text;
       this._hp = Ti.UI.createLabel({
         color: '#576996',
-        backgroundColor: 'blue',
         font: {
           fontSize: 16,
           fontWeight: 'bold',
           fontFamily: 'Arial'
         },
-        right: 0,
+        right: 5,
         top: 1,
         height: 30,
         textAlign: Ti.UI.TEXT_ALIGNMENT_RIGHT,
         width: 200
       });
-      text = ModelChara.get().hp_remain + "/" + ModelChara.get().hp_max;
+      text = "HP" + ModelChara.get().hp_remain + "/" + ModelChara.get().hp_max;
       this._hp.setText(text);
       return this._statusView.add(this._hp);
+    };
+
+    StatusView.prototype._set_equipment = function() {
+      this._equipment = Ti.UI.createLabel({
+        color: '#576996',
+        font: {
+          fontSize: 16,
+          fontWeight: 'bold',
+          fontFamily: 'Arial'
+        },
+        left: 5,
+        top: 31,
+        height: 30,
+        width: 'auto',
+        text: "装備"
+      });
+      this._statusView.add(this._equipment);
+      this._set_weapon();
+      return this._set_shield();
+    };
+
+    StatusView.prototype._set_weapon = function() {
+      var text;
+      this._weapon = Ti.UI.createView({
+        right: 5,
+        top: 35,
+        height: 30,
+        width: 200
+      });
+      this._weapon_image = Ti.UI.createView({
+        right: 1,
+        height: 30,
+        width: 30,
+        backgroundImage: 'images/hammer.png'
+      });
+      this._weapon_text = Ti.UI.createLabel({
+        color: '#576996',
+        font: {
+          fontSize: 16,
+          fontWeight: 'bold',
+          fontFamily: 'Arial'
+        },
+        right: 32,
+        height: 30,
+        textAlign: Ti.UI.TEXT_ALIGNMENT_RIGHT,
+        width: 200
+      });
+      text = "最強のハンマー";
+      this._weapon_text.setText(text);
+      this._weapon.add(this._weapon_image);
+      this._weapon.add(this._weapon_text);
+      return this._statusView.add(this._weapon);
+    };
+
+    StatusView.prototype._set_shield = function() {
+      var text;
+      this._shield = Ti.UI.createView({
+        right: 5,
+        top: 60,
+        height: 30,
+        width: 200
+      });
+      this._shield_image = Ti.UI.createView({
+        right: 1,
+        height: 30,
+        width: 30,
+        backgroundImage: 'images/shield.png'
+      });
+      this._shield_text = Ti.UI.createLabel({
+        color: '#576996',
+        font: {
+          fontSize: 16,
+          fontWeight: 'bold',
+          fontFamily: 'Arial'
+        },
+        right: 32,
+        height: 30,
+        textAlign: Ti.UI.TEXT_ALIGNMENT_RIGHT,
+        width: 200
+      });
+      text = "いかれた盾";
+      this._shield_text.setText(text);
+      this._shield.add(this._shield_image);
+      this._shield.add(this._shield_text);
+      return this._statusView.add(this._shield);
     };
 
     StatusView.prototype.appendedTo = function(win) {
