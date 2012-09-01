@@ -6,7 +6,9 @@ class RecordEnemy extends RecordBase
         @enemy_data = @modelEnemyData.get_by_id( row.id )
         @modelEnemyMaster = ModelFactory.get("EnemyMaster")
         @enemy_master = @modelEnemyMaster.get_by_id( @enemy_data.enemy_id )
-        return super( row )
+        super( row )
+        @message.setText @enemy_master.name + "が現れた！！"
+        return @
     _backgroundImage: ->
         return @enemy_master.image
     action: ->

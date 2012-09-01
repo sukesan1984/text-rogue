@@ -12,7 +12,7 @@
     function EnemyMaster() {
       var sql;
       this.execute('DROP TABLE IF EXISTS enemy_master');
-      sql = 'CREATE TABLE IF NOT EXISTS\nenemy_master (\n    enemy_id integer\n    , type integer\n    , name text\n    , hp_max integer\n    , image integer\n)';
+      sql = 'CREATE TABLE IF NOT EXISTS\nenemy_master (\n    enemy_id integer\n    , type integer\n    , name text\n    , hp_max integer\n    , image text\n)';
       this.execute(sql);
       this.execute('DELETE FROM enemy_master');
       this.load();
@@ -20,12 +20,19 @@
     }
 
     EnemyMaster.prototype.load = function() {
-      return this.insert({
+      this.insert({
         enemy_id: 1,
         type: 1,
-        name: "dragon",
+        name: "ドラゴン",
         hp_max: 10,
-        image: "images/dragon.png"
+        image: "images/enemy/dragon.png"
+      });
+      return this.insert({
+        enemy_id: 2,
+        type: 1,
+        name: "火の馬",
+        hp_max: 20,
+        image: "images/enemy/fire_horse.png"
       });
     };
 

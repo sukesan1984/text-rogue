@@ -16,7 +16,9 @@
       this.enemy_data = this.modelEnemyData.get_by_id(row.id);
       this.modelEnemyMaster = ModelFactory.get("EnemyMaster");
       this.enemy_master = this.modelEnemyMaster.get_by_id(this.enemy_data.enemy_id);
-      return RecordEnemy.__super__.constructor.call(this, row);
+      RecordEnemy.__super__.constructor.call(this, row);
+      this.message.setText(this.enemy_master.name + "が現れた！！");
+      return this;
     }
 
     RecordEnemy.prototype._backgroundImage = function() {

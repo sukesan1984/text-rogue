@@ -10,7 +10,7 @@ class EnemyMaster extends ModelBase
                 , type integer
                 , name text
                 , hp_max integer
-                , image integer
+                , image text
             )
         '''
         @.execute(sql)
@@ -21,9 +21,15 @@ class EnemyMaster extends ModelBase
         @.insert
             enemy_id: 1
             type: 1
-            name: "dragon"
+            name: "ドラゴン"
             hp_max: 10
-            image: "images/dragon.png"
+            image: "images/enemy/dragon.png"
+        @.insert
+            enemy_id: 2
+            type: 1
+            name: "火の馬"
+            hp_max: 20
+            image: "images/enemy/fire_horse.png"
 
     insert: ( master )->
         sql = '''

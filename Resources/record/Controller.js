@@ -22,7 +22,7 @@
       modelSeq = ModelFactory.get("FieldSequencial");
       id = modelSeq.get();
       if (rand <= 10) {
-        enemy_id = 1;
+        enemy_id = rand <= 5 ? 1 : 2;
         modelEnemyMaster = ModelFactory.get("EnemyMaster");
         e_master = modelEnemyMaster.get_by_id(enemy_id);
         modelEnemyData = ModelFactory.get("Enemy");
