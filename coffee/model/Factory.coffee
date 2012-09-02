@@ -3,6 +3,7 @@ Enemy = require 'model/instance/Enemy'
 PlayerInstance = require 'model/instance/Player'
 ItemInstance = require 'model/instance/Item'
 EnemyMaster = require 'model/master/Enemy'
+EnemyMapMaster = require 'model/master/EnemyMap'
 ItemMaster = require 'model/master/Item'
 FieldSequencial = require 'model/FieldSequencial'
 ModelFactory = new class
@@ -21,6 +22,8 @@ ModelFactory = new class
                 @_models[name] = new ItemInstance()
             when "EnemyMaster"
                 @_models[name] = new EnemyMaster()
+            when "EnemyMapMaster"
+                @_models[name] = new EnemyMapMaster()
             when "ItemMaster"
                 @_models[name] = new ItemMaster()
             when "FieldSequencial"

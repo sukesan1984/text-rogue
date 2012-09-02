@@ -7,4 +7,6 @@ class ModelBase
         return @db.execute.apply(@db, arguments)
     close: ->
         @db.close()
+    get_rand: (max) ->
+        rand = parseInt(Math.random()*max)
 module.exports = ModelBase

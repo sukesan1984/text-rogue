@@ -17,6 +17,11 @@
       return this.db.close();
     };
 
+    ModelBase.prototype.get_rand = function(max) {
+      var rand;
+      return rand = parseInt(Math.random() * max);
+    };
+
     return ModelBase;
 
   })();

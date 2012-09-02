@@ -52,7 +52,10 @@
       modelSeq = ModelFactory.get("FieldSequencial");
       id = modelSeq.get();
       if (rand <= 50) {
-        enemy_id = this._get_enemy_id(rand);
+        enemy_id = ModelFactory.get("EnemyMapMaster").get_enemy_id({
+          dungeon_id: 1,
+          floor: 1
+        });
         modelEnemyMaster = ModelFactory.get("EnemyMaster");
         e_master = modelEnemyMaster.get_by_id(enemy_id);
         modelEnemyData = ModelFactory.get("Enemy");
@@ -69,16 +72,6 @@
 
       }
       return this.reload();
-    };
-
-    DungeonController.prototype._get_enemy_id = function(seed) {
-      if (seed <= 20) {
-        return 1;
-      } else if (seed < 30) {
-        return 2;
-      } else {
-        return 3;
-      }
     };
 
     DungeonController.prototype._get_item_id = function(seed) {
