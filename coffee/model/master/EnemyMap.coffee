@@ -32,7 +32,12 @@ class EnemyMapMaster extends ModelBase
             dungeon_id: 1
             floor: 1
             enemy_id: 3
-            probability: 60
+            probability: 30
+        @.insert
+            dungeon_id: 1
+            floor: 1
+            enemy_id: 4
+            probability: 30
     insert: ( master )->
         sql = '''
         INSERT INTO enemy_map_master

@@ -32,11 +32,17 @@
         enemy_id: 2,
         probability: 30
       });
-      return this.insert({
+      this.insert({
         dungeon_id: 1,
         floor: 1,
         enemy_id: 3,
-        probability: 60
+        probability: 30
+      });
+      return this.insert({
+        dungeon_id: 1,
+        floor: 1,
+        enemy_id: 4,
+        probability: 30
       });
     };
 

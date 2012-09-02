@@ -40,6 +40,13 @@ class EnemyMaster extends ModelBase
             hp_max: 5
             attack: 2
             image: "images/enemy/nebukuro.png"
+        @.insert
+            enemy_id: 4
+            type: 1
+            name: "傘野郎"
+            hp_max: 100
+            attack: 20
+            image: "images/enemy/kasa.png"
 
 
     insert: ( master )->
