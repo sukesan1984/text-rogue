@@ -1,7 +1,7 @@
 ModelFactory   = require 'model/Factory'
-RecordFactory  = require 'record/Factory'
-DungeonLogView = require 'view/Dungeon/Log'
-StatusView     = require 'view/Dungeon/Status'
+RecordFactory  = require 'view/dungeon/record/Factory'
+DungeonLogView = require 'view/dungeon/Log'
+StatusView     = require 'view/dungeon/Status'
 
 class DungeonController
     constructor :->

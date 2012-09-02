@@ -1,9 +1,9 @@
 (function() {
   var Factory, RecordEnemy, RecordItem;
 
-  RecordEnemy = require('record/Enemy');
+  RecordEnemy = require('view/dungeon/record/Enemy');
 
-  RecordItem = require('record/Item');
+  RecordItem = require('view/dungeon/record/Item');
 
   Factory = new ((function() {
 

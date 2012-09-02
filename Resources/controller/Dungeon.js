@@ -3,11 +3,11 @@
 
   ModelFactory = require('model/Factory');
 
-  RecordFactory = require('record/Factory');
+  RecordFactory = require('view/dungeon/record/Factory');
 
-  DungeonLogView = require('view/Dungeon/Log');
+  DungeonLogView = require('view/dungeon/Log');
 
-  StatusView = require('view/Dungeon/Status');
+  StatusView = require('view/dungeon/Status');
 
   DungeonController = (function() {
 

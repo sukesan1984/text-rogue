@@ -1,4 +1,4 @@
-RecordBase = require 'record/Base'
+RecordBase = require 'view/dungeon/record/Base'
 ModelFactory = require 'model/Factory'
 class RecordItem extends RecordBase
     constructor: ( row )->

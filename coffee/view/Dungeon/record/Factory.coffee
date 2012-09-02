@@ -1,5 +1,5 @@
-RecordEnemy = require 'record/Enemy'
-RecordItem = require 'record/Item'
+RecordEnemy = require 'view/dungeon/record/Enemy'
+RecordItem = require 'view/dungeon/record/Item'
 
 Factory = new class
     get: ( row )->
