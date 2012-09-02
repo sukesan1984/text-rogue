@@ -27,7 +27,7 @@
 
     ItemInstance.prototype.get_by_id = function(id) {
       var result, rows;
-      rows = this.execute('SELECT * FROM item_data');
+      rows = this.execute('SELECT * FROM item_data WHERE id = ?', id);
       if (!rows.isValidRow()) {
         return;
       }

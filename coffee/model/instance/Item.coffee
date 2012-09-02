@@ -29,7 +29,7 @@ class ItemInstance extends ModelBase
         @.execute( sql, id, i.item_id )
         @.close()
     get_by_id: ( id )->
-        rows = @.execute('SELECT * FROM item_data')
+        rows = @.execute('SELECT * FROM item_data WHERE id = ?', id)
         return if ( !rows.isValidRow() )
         result =
             id: rows.fieldByName('id')

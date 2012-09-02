@@ -74,7 +74,7 @@ class StatusView
             right: 1
             height: 30
             width: 30
-            backgroundImage: 'images/hammer.png'
+            backgroundImage: 'images/item/hammer.png'
 
         @_weapon_text = Ti.UI.createLabel
             color: '#576996'
@@ -105,7 +105,7 @@ class StatusView
             right: 1
             height: 30
             width: 30
-            backgroundImage: 'images/shield.png'
+            backgroundImage: 'images/item/shield.png'
 
         @_shield_text = Ti.UI.createLabel
             color: '#576996'
