@@ -10,6 +10,7 @@ class EnemyMaster extends ModelBase
                 , type integer
                 , name text
                 , hp_max integer
+                , attack integer
                 , image text
             )
         '''
@@ -23,12 +24,14 @@ class EnemyMaster extends ModelBase
             type: 1
             name: "ドラゴン"
             hp_max: 10
+            attack: 5
             image: "images/enemy/dragon.png"
         @.insert
             enemy_id: 2
             type: 1
             name: "火の馬"
             hp_max: 20
+            attack: 10
             image: "images/enemy/fire_horse.png"
 
     insert: ( master )->
@@ -39,6 +42,7 @@ class EnemyMaster extends ModelBase
                 , type
                 , name
                 , hp_max
+                , attack
                 , image
             )
             values
@@ -48,9 +52,10 @@ class EnemyMaster extends ModelBase
                 , ?
                 , ?
                 , ?
+                , ?
             )
         '''
-        @.execute( sql, master.enemy_id, master.type, master.name, master.hp_max, master.image )
+        @.execute( sql, master.enemy_id, master.type, master.name, master.hp_max, master.attack, master.image )
         @.close()
     get_by_id: ( id ) ->
         rows = @.execute( 'SELECT * FROM enemy_master WHERE enemy_id = ? ', id )
@@ -61,6 +66,7 @@ class EnemyMaster extends ModelBase
                 image: rows.fieldByName('image')
                 hp_max: rows.fieldByName('hp_max')
                 name: rows.fieldByName('name')
+                attack: rows.fieldByName('attack')
         rows.close()
         @.close()
         return result

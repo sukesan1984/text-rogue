@@ -17,7 +17,8 @@
       this.modelEnemyMaster = ModelFactory.get("EnemyMaster");
       this.enemy_master = this.modelEnemyMaster.get_by_id(this.enemy_data.enemy_id);
       RecordEnemy.__super__.constructor.call(this, row);
-      this.message.setText(this.enemy_master.name + "が現れた！！");
+      this.message.setText(this.enemy_data.message);
+      this.right_bottom.setText(this.enemy_data.hp_remain + "/" + this.enemy_master.hp_max);
       return this;
     }
 
@@ -27,13 +28,17 @@
 
     RecordEnemy.prototype.action = function() {
       var dialog;
+      this.modelEnemyData.update({
+        hp_remain: this.enemy_data.hp_remain,
+        message: this.enemy_master.name + "の攻撃！" + this.enemy_master.attack + "のダメージ"
+      }, this.id);
       if (!this.row.getHasCheck()) {
         return;
       }
       this.model["delete"](this.id);
       dialog = Titanium.UI.createAlertDialog();
       dialog.setTitle('YEAHHHHH');
-      dialog.setMessage('敵を倒した。');
+      dialog.setMessage(this.enemy_master.name + 'を倒した。');
       return dialog.show();
     };
 

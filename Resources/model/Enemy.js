@@ -11,7 +11,8 @@
 
     function Enemy() {
       var sql;
-      sql = 'CREATE TABLE IF NOT EXISTS\nenemy_data (\n    id integer\n    , enemy_id integer\n    , hp_remain integer\n)';
+      this.execute('DROP TABLE IF EXISTS enemy_data');
+      sql = 'CREATE TABLE IF NOT EXISTS\nenemy_data (\n    id integer\n    , enemy_id integer\n    , hp_remain integer\n    , message text\n)';
       this.execute(sql);
       this.execute('DELETE FROM enemy_data');
       this.close();
@@ -19,13 +20,20 @@
 
     Enemy.prototype.insert = function(id, e) {
       var sql;
-      sql = 'INSERT INTO enemy_data\n(\n    id\n    , enemy_id\n    , hp_remain\n)\nvalues\n(\n    ?\n    , ?\n    , ?\n)';
-      this.execute(sql, id, e.enemy_id, e.hp_max);
+      sql = 'INSERT INTO enemy_data\n(\n    id\n    , enemy_id\n    , hp_remain\n    , message\n)\nvalues\n(\n    ?\n    , ?\n    , ?\n    , ?\n)';
+      this.execute(sql, id, e.enemy_id, e.hp_max, e.name + "が現れた!!");
       return this.close();
     };
 
     Enemy.prototype["delete"] = function(id) {
       this.execute("DELETE FROM enemy_data where id = ?", id);
+      return this.close();
+    };
+
+    Enemy.prototype.update = function(updates, id) {
+      var sql;
+      sql = 'UPDATE enemy_data\nset\n    hp_remain = ?\n    , message = ?\nwhere\n    id = ?';
+      this.execute(sql, updates.hp_remain, updates.message, id);
       return this.close();
     };
 
@@ -38,7 +46,8 @@
       result = {
         id: rows.fieldByName('id'),
         enemy_id: rows.fieldByName('enemy_id'),
-        hp_remain: rows.fieldByName('hp_remain')
+        hp_remain: rows.fieldByName('hp_remain'),
+        message: rows.fieldByName('message')
       };
       rows.close();
       this.close();
@@ -53,7 +62,8 @@
         result.push({
           id: rows.fieldByName('id'),
           enemy_id: rows.fieldByName('enemy_id'),
-          hp_remain: rows.fieldByName('hp_remain')
+          hp_remain: rows.fieldByName('hp_remain'),
+          message: rows.fieldByName('message')
         });
         rows.next();
       }

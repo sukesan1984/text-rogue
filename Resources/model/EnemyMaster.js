@@ -12,7 +12,7 @@
     function EnemyMaster() {
       var sql;
       this.execute('DROP TABLE IF EXISTS enemy_master');
-      sql = 'CREATE TABLE IF NOT EXISTS\nenemy_master (\n    enemy_id integer\n    , type integer\n    , name text\n    , hp_max integer\n    , image text\n)';
+      sql = 'CREATE TABLE IF NOT EXISTS\nenemy_master (\n    enemy_id integer\n    , type integer\n    , name text\n    , hp_max integer\n    , attack integer\n    , image text\n)';
       this.execute(sql);
       this.execute('DELETE FROM enemy_master');
       this.load();
@@ -25,6 +25,7 @@
         type: 1,
         name: "ドラゴン",
         hp_max: 10,
+        attack: 5,
         image: "images/enemy/dragon.png"
       });
       return this.insert({
@@ -32,14 +33,15 @@
         type: 1,
         name: "火の馬",
         hp_max: 20,
+        attack: 10,
         image: "images/enemy/fire_horse.png"
       });
     };
 
     EnemyMaster.prototype.insert = function(master) {
       var sql;
-      sql = 'INSERT INTO enemy_master\n(\n    enemy_id\n    , type\n    , name\n    , hp_max\n    , image\n)\nvalues\n(\n    ?\n    , ?\n    , ?\n    , ?\n    , ?\n)';
-      this.execute(sql, master.enemy_id, master.type, master.name, master.hp_max, master.image);
+      sql = 'INSERT INTO enemy_master\n(\n    enemy_id\n    , type\n    , name\n    , hp_max\n    , attack\n    , image\n)\nvalues\n(\n    ?\n    , ?\n    , ?\n    , ?\n    , ?\n    , ?\n)';
+      this.execute(sql, master.enemy_id, master.type, master.name, master.hp_max, master.attack, master.image);
       return this.close();
     };
 
@@ -54,7 +56,8 @@
         enemy_id: rows.fieldByName('enemy_id'),
         image: rows.fieldByName('image'),
         hp_max: rows.fieldByName('hp_max'),
-        name: rows.fieldByName('name')
+        name: rows.fieldByName('name'),
+        attack: rows.fieldByName('attack')
       };
       rows.close();
       this.close();

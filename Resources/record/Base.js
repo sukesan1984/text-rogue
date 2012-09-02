@@ -20,16 +20,29 @@
       this.message = Ti.UI.createLabel({
         color: '#576996',
         font: {
-          fontSize: 16,
+          fontSize: 12,
           fontWeight: 'bold',
           fontFamily: 'Arial'
         },
         left: 70,
         top: 2,
         height: 30,
-        width: 200
+        width: 300
       });
       this.row.add(this.message);
+      this.right_bottom = Ti.UI.createLabel({
+        color: '#576996',
+        font: {
+          fontSize: 12,
+          fontWeight: 'bold',
+          fontFamily: 'Arial'
+        },
+        right: 1,
+        bottom: 1,
+        height: 30,
+        width: 50
+      });
+      this.row.add(this.right_bottom);
       this.photo = Ti.UI.createView({
         top: 5,
         left: 10,

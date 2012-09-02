@@ -4,7 +4,7 @@ do ->
     AppWinMods = require "AppWinMods"
     AppTabMods = require "AppTabMods"
     AppFieldTable = require "AppFieldTable"
-    AppTableSample = require "AppTableSample"
+    DungeonController = require "controller/Dungeon"
     # Tab Parameter
     params = [{
         title: "Main Scene"
@@ -14,7 +14,7 @@ do ->
         window: AppFieldTable.init "Middle1 Window"
     },{
         title: "TableView Sample"
-        window: AppTableSample.init "Table Sample"
+        window: DungeonController.init "Table Sample"
     },{
         title: "Middle2 Tab"
         window: AppWinMods.init "Middle2 Window"
