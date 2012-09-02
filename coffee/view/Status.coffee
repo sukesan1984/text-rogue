@@ -1,4 +1,5 @@
-ModelChara = require 'model/Chara'
+ModelFactory = require 'model/Factory'
+modelPlayer = ModelFactory.get("Player")
 class StatusView
     constructor: ()->
         @_statusView = Ti.UI.createView
@@ -26,7 +27,7 @@ class StatusView
             top: 1
             height: 30
             width: 'auto'
-            text: ModelChara.get().name
+            text: modelPlayer.get().name
         @_statusView.add @_name
 
     _set_hp:->
@@ -42,7 +43,7 @@ class StatusView
             textAlign: Ti.UI.TEXT_ALIGNMENT_RIGHT
             width: 200
 
-        text = "HP" +  ModelChara.get().hp_remain + "/" + ModelChara.get().hp_max
+        text = "HP" +  modelPlayer.get().hp_remain + "/" + modelPlayer.get().hp_max
         @_hp.setText text
         @_statusView.add @_hp
     _set_equipment:->

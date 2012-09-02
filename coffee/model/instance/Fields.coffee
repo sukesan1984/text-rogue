@@ -1,6 +1,6 @@
 ModelBase = require 'model/Base'
 
-class Records extends ModelBase
+class Fields extends ModelBase
     constructor: ->
         sql = '''
             CREATE TABLE IF NOT EXISTS
@@ -31,5 +31,5 @@ class Records extends ModelBase
         return result
 
 
-module.exports = Records
+module.exports = Fields
 

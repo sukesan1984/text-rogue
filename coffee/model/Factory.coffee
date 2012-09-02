@@ -1,6 +1,7 @@
-Records = require 'model/Records'
-Enemy = require 'model/Enemy'
-EnemyMaster = require 'model/EnemyMaster'
+Records = require 'model/instance/Fields'
+Enemy = require 'model/instance/Enemy'
+Player = require 'model/instance/Player'
+EnemyMaster = require 'model/master/Enemy'
 FieldSequencial = require 'model/FieldSequencial'
 ModelFactory = new class
     constructor:->
@@ -12,6 +13,8 @@ ModelFactory = new class
                 @_models[name] = new Records()
             when "Enemy"
                 @_models[name] = new Enemy()
+            when "Player"
+                @_models[name] = new Player()
             when "EnemyMaster"
                 @_models[name] = new EnemyMaster()
             when "FieldSequencial"

@@ -5,9 +5,9 @@
 
   RecordFactory = require('record/Factory');
 
-  DungeonLogView = require('view/DungeonLogView');
+  DungeonLogView = require('view/DungeonLog');
 
-  StatusView = require('view/StatusView');
+  StatusView = require('view/Status');
 
   DungeonController = (function() {
 

@@ -1,4 +1,5 @@
-Chara = new class
+ModelBase = require 'model/Base'
+class Player extends ModelBase
     constructor: ->
         @record =
             name: "sukesan1984"
@@ -7,4 +8,4 @@ Chara = new class
     get: ->
         return @record
 
-module.exports = Chara
+module.exports = Player

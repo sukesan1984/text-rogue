@@ -1,15 +1,15 @@
 (function() {
-  var ModelBase, Records,
+  var Fields, ModelBase,
     __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
   ModelBase = require('model/Base');
 
-  Records = (function(_super) {
+  Fields = (function(_super) {
 
-    __extends(Records, _super);
+    __extends(Fields, _super);
 
-    function Records() {
+    function Fields() {
       var sql;
       sql = 'CREATE TABLE IF NOT EXISTS\nfield_data (\n    id integer\n    , type integer\n)';
       this.execute(sql);
@@ -17,17 +17,17 @@
       this.close();
     }
 
-    Records.prototype.insert = function(id, type) {
+    Fields.prototype.insert = function(id, type) {
       this.execute('INSERT INTO field_data (id, type) values ( ?, ? )', id, type);
       return this.close();
     };
 
-    Records.prototype["delete"] = function(id) {
+    Fields.prototype["delete"] = function(id) {
       this.execute("DELETE FROM field_data where id = ?", id);
       return this.close();
     };
 
-    Records.prototype.get_all = function() {
+    Fields.prototype.get_all = function() {
       var result, rows;
       rows = this.execute('SELECT id, type FROM field_data');
       result = [];
@@ -43,10 +43,10 @@
       return result;
     };
 
-    return Records;
+    return Fields;
 
   })(ModelBase);
 
-  module.exports = Records;
+  module.exports = Fields;
 
 }).call(this);

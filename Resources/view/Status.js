@@ -1,7 +1,9 @@
 (function() {
-  var ModelChara, StatusView;
+  var ModelFactory, StatusView, modelPlayer;
 
-  ModelChara = require('model/Chara');
+  ModelFactory = require('model/Factory');
+
+  modelPlayer = ModelFactory.get("Player");
 
   StatusView = (function() {
 
@@ -36,7 +38,7 @@
         top: 1,
         height: 30,
         width: 'auto',
-        text: ModelChara.get().name
+        text: modelPlayer.get().name
       });
       return this._statusView.add(this._name);
     };
@@ -56,7 +58,7 @@
         textAlign: Ti.UI.TEXT_ALIGNMENT_RIGHT,
         width: 200
       });
-      text = "HP" + ModelChara.get().hp_remain + "/" + ModelChara.get().hp_max;
+      text = "HP" + modelPlayer.get().hp_remain + "/" + modelPlayer.get().hp_max;
       this._hp.setText(text);
       return this._statusView.add(this._hp);
     };
