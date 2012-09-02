@@ -1,9 +1,7 @@
 (function() {
-  var ModelFactory, StatusView, modelPlayer;
+  var ModelFactory, StatusView;
 
   ModelFactory = require('model/Factory');
-
-  modelPlayer = ModelFactory.get("Player");
 
   StatusView = (function() {
 
@@ -15,11 +13,13 @@
         left: 0,
         right: 0
       });
+      this._pushed = false;
+      this._clickObserver = [];
+      this.modelPlayerInstance = ModelFactory.get("PlayerInstance");
+      this._player = this.modelPlayerInstance.get();
       this._set_name();
       this._set_hp();
       this._set_equipment();
-      this._pushed = false;
-      this._clickObserver = [];
       this._statusView.addEventListener('click', function(e) {
         return _this.onClick(e);
       });
@@ -38,7 +38,7 @@
         top: 1,
         height: 30,
         width: 'auto',
-        text: modelPlayer.get().name
+        text: this._player.name
       });
       return this._statusView.add(this._name);
     };
@@ -58,7 +58,7 @@
         textAlign: Ti.UI.TEXT_ALIGNMENT_RIGHT,
         width: 200
       });
-      text = "HP" + modelPlayer.get().hp_remain + "/" + modelPlayer.get().hp_max;
+      text = "HP" + this._player.hp_remain + "/" + this._player.hp_max;
       this._hp.setText(text);
       return this._statusView.add(this._hp);
     };

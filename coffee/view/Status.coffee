@@ -1,5 +1,4 @@
 ModelFactory = require 'model/Factory'
-modelPlayer = ModelFactory.get("Player")
 class StatusView
     constructor: ()->
         @_statusView = Ti.UI.createView
@@ -7,12 +6,14 @@ class StatusView
             top:0
             left:0
             right:0
-        @_set_name()
-        @_set_hp()
-        @_set_equipment()
 
         @_pushed = false
         @_clickObserver = []
+        @modelPlayerInstance = ModelFactory.get("PlayerInstance")
+        @_player = @modelPlayerInstance.get()
+        @_set_name()
+        @_set_hp()
+        @_set_equipment()
         @_statusView.addEventListener 'click', (e)=>
             @onClick( e )
         return @
@@ -27,7 +28,7 @@ class StatusView
             top: 1
             height: 30
             width: 'auto'
-            text: modelPlayer.get().name
+            text: @_player.name
         @_statusView.add @_name
 
     _set_hp:->
@@ -43,7 +44,7 @@ class StatusView
             textAlign: Ti.UI.TEXT_ALIGNMENT_RIGHT
             width: 200
 
-        text = "HP" +  modelPlayer.get().hp_remain + "/" + modelPlayer.get().hp_max
+        text = "HP" +  @_player.hp_remain + "/" + @_player.hp_max
         @_hp.setText text
         @_statusView.add @_hp
     _set_equipment:->

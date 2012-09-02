@@ -1,11 +1,11 @@
 (function() {
-  var Enemy, EnemyMaster, FieldSequencial, ItemInstance, ItemMaster, ModelFactory, Player, Records;
+  var Enemy, EnemyMaster, FieldSequencial, ItemInstance, ItemMaster, ModelFactory, PlayerInstance, Records;
 
   Records = require('model/instance/Fields');
 
   Enemy = require('model/instance/Enemy');
 
-  Player = require('model/instance/Player');
+  PlayerInstance = require('model/instance/Player');
 
   ItemInstance = require('model/instance/Item');
 
@@ -32,8 +32,8 @@
         case "Enemy":
           this._models[name] = new Enemy();
           break;
-        case "Player":
-          this._models[name] = new Player();
+        case "PlayerInstance":
+          this._models[name] = new PlayerInstance();
           break;
         case "ItemInstance":
           this._models[name] = new ItemInstance();

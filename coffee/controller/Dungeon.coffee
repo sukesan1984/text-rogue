@@ -4,7 +4,7 @@ DungeonLogView = require 'view/DungeonLog'
 StatusView = require 'view/Status'
 
 class DungeonController
-    constructor :-> 
+    constructor :->
         @_turn = 0
         @_rowData = []
         @_rowObjects = []
