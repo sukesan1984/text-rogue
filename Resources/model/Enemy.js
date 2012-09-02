@@ -21,7 +21,7 @@
     Enemy.prototype.insert = function(id, e) {
       var sql;
       sql = 'INSERT INTO enemy_data\n(\n    id\n    , enemy_id\n    , hp_remain\n    , message\n)\nvalues\n(\n    ?\n    , ?\n    , ?\n    , ?\n)';
-      this.execute(sql, id, e.enemy_id, e.hp_max, e.name + "が現れた!!");
+      this.execute(sql, id, e.enemy_id, e.hp_max, e.name + "が現れた！！");
       return this.close();
     };
 

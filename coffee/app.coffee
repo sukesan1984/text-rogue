@@ -1,28 +1,22 @@
 # Sample Application - app.coffee
 do ->
     # CommonJS Modules
-    AppWinMods = require "AppWinMods"
-    AppTabMods = require "view/Tab"
-    AppFieldTable = require "AppFieldTable"
+    Tab = require "view/Tab"
+    StatusController = require "controller/Status"
+    ItemController = require "controller/Item"
     DungeonController = require "controller/Dungeon"
     # Tab Parameter
     params = [{
-        title: "Main Scene"
-        window: AppWinMods.init "Main Scene"
+        title: "ステータス"
+        window: new StatusController("ステータス")
     },{
-        title: "TableView Tab"
-        window: AppFieldTable.init "Middle1 Window"
+        title: "持ち物"
+        window: new ItemController("持ち物")
     },{
-        title: "TableView Sample"
+        title: "ダンジョン"
         window: new DungeonController()
-    },{
-        title: "Middle2 Tab"
-        window: AppWinMods.init "Middle2 Window"
-    },{
-        title: "Right Tab"
-        window: AppWinMods.init "Right Window"
     }]
     # Start
-    tabGroup = new AppTabMods()
+    tabGroup = new Tab()
     tabGroup.appendTabs params
     tabGroup.open()

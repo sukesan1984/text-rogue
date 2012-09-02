@@ -32,7 +32,7 @@ class Enemy extends ModelBase
                 , ?
             )
         '''
-        @.execute( sql, id, e.enemy_id, e.hp_max, e.name + "が現れた!!" )
+        @.execute( sql, id, e.enemy_id, e.hp_max, e.name + "が現れた！！" )
         @.close()
     delete: ( id ) ->
         @.execute( "DELETE FROM enemy_data where id = ?", id )

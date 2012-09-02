@@ -1,11 +1,9 @@
 (function() {
-  var DungeonController, DungeonLogView, ModelFactory, RecordController, RecordFactory, StatusView;
+  var DungeonController, DungeonLogView, ModelFactory, RecordFactory, StatusView;
 
   ModelFactory = require('model/Factory');
 
   RecordFactory = require('record/Factory');
-
-  RecordController = require('record/Controller');
 
   DungeonLogView = require('view/DungeonLogView');
 

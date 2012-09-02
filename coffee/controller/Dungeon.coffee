@@ -1,6 +1,5 @@
 ModelFactory = require 'model/Factory'
 RecordFactory = require 'record/Factory'
-RecordController = require 'record/Controller'
 DungeonLogView = require 'view/DungeonLogView'
 StatusView = require 'view/StatusView'
 
