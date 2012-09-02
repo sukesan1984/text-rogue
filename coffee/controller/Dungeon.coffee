@@ -43,18 +43,38 @@ class DungeonController
         modelRecords = ModelFactory.get( "Records" )
         modelSeq = ModelFactory.get( "FieldSequencial" )
         id = modelSeq.get()
-        if ( rand <= 10 )
-            enemy_id = if rand <=5 then 1 else 2
+        if ( rand <= 40 )
+            enemy_id = @._get_enemy_id( rand )
             modelEnemyMaster = ModelFactory.get("EnemyMaster")
             e_master = modelEnemyMaster.get_by_id( enemy_id )
             modelEnemyData = ModelFactory.get("Enemy")
             modelEnemyData.insert(id, e_master )
             modelRecords.insert( id, 1)
         else if( rand <= 60)
+            item_id = @._get_item_id( rand )
+            modelItemMaster = ModelFactory.get("ItemMaster")
+            i_master = modelItemMaster.get_by_id( item_id )
+            modelItemInstance = ModelFactory.get("ItemInstance")
+            modelItemInstance.insert(id, i_master)
             modelRecords.insert( id, 2)
         else
 
         @reload()
+    _get_enemy_id: ( seed )->
+         if seed <= 20
+             return 1
+         else if seed < 30
+             return 2
+         else
+             return 3
+
+    _get_item_id: ( seed )->
+        if seed <= 50
+            return 1
+        else if seed < 55
+            return 2
+        else
+            return 3
 
     notify: ( func ) ->
         for i in @_rowObjects

@@ -46,24 +46,49 @@
     }
 
     DungeonController.prototype._setMock = function() {
-      var e_master, enemy_id, id, modelEnemyData, modelEnemyMaster, modelRecords, modelSeq, rand;
+      var e_master, enemy_id, i_master, id, item_id, modelEnemyData, modelEnemyMaster, modelItemInstance, modelItemMaster, modelRecords, modelSeq, rand;
       rand = parseInt(Math.random() * 100);
       modelRecords = ModelFactory.get("Records");
       modelSeq = ModelFactory.get("FieldSequencial");
       id = modelSeq.get();
-      if (rand <= 10) {
-        enemy_id = rand <= 5 ? 1 : 2;
+      if (rand <= 40) {
+        enemy_id = this._get_enemy_id(rand);
         modelEnemyMaster = ModelFactory.get("EnemyMaster");
         e_master = modelEnemyMaster.get_by_id(enemy_id);
         modelEnemyData = ModelFactory.get("Enemy");
         modelEnemyData.insert(id, e_master);
         modelRecords.insert(id, 1);
       } else if (rand <= 60) {
+        item_id = this._get_item_id(rand);
+        modelItemMaster = ModelFactory.get("ItemMaster");
+        i_master = modelItemMaster.get_by_id(item_id);
+        modelItemInstance = ModelFactory.get("ItemInstance");
+        modelItemInstance.insert(id, i_master);
         modelRecords.insert(id, 2);
       } else {
 
       }
       return this.reload();
+    };
+
+    DungeonController.prototype._get_enemy_id = function(seed) {
+      if (seed <= 20) {
+        return 1;
+      } else if (seed < 30) {
+        return 2;
+      } else {
+        return 3;
+      }
+    };
+
+    DungeonController.prototype._get_item_id = function(seed) {
+      if (seed <= 50) {
+        return 1;
+      } else if (seed < 55) {
+        return 2;
+      } else {
+        return 3;
+      }
     };
 
     DungeonController.prototype.notify = function(func) {

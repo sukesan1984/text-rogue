@@ -28,13 +28,21 @@
         attack: 5,
         image: "images/enemy/dragon.png"
       });
-      return this.insert({
+      this.insert({
         enemy_id: 2,
         type: 1,
         name: "火の馬",
         hp_max: 20,
         attack: 10,
         image: "images/enemy/fire_horse.png"
+      });
+      return this.insert({
+        enemy_id: 3,
+        type: 1,
+        name: "寝袋マン",
+        hp_max: 5,
+        attack: 2,
+        image: "images/enemy/nebukuro.png"
       });
     };
 
