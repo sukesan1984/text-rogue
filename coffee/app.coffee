@@ -2,7 +2,7 @@
 do ->
     # CommonJS Modules
     AppWinMods = require "AppWinMods"
-    AppTabMods = require "AppTabMods"
+    AppTabMods = require "view/Tab"
     AppFieldTable = require "AppFieldTable"
     DungeonController = require "controller/Dungeon"
     # Tab Parameter
@@ -14,7 +14,7 @@ do ->
         window: AppFieldTable.init "Middle1 Window"
     },{
         title: "TableView Sample"
-        window: DungeonController.init "Table Sample"
+        window: new DungeonController()
     },{
         title: "Middle2 Tab"
         window: AppWinMods.init "Middle2 Window"
