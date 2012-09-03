@@ -1,11 +1,11 @@
 (function() {
-  var Factory, RecordEnemy, RecordItem;
+  var DungeonRecordFactory, RecordEnemy, RecordItem;
 
   RecordEnemy = require('view/dungeon/record/Enemy');
 
   RecordItem = require('view/dungeon/record/Item');
 
-  Factory = new ((function() {
+  DungeonRecordFactory = new ((function() {
 
     function _Class() {}
 
@@ -24,6 +24,6 @@
 
   })());
 
-  module.exports = Factory;
+  module.exports = DungeonRecordFactory;
 
 }).call(this);

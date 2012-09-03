@@ -1,9 +1,9 @@
 (function() {
-  var DungeonController, DungeonLogView, ModelFactory, RecordFactory, StatusView;
+  var DungeonController, DungeonLogView, DungeonRecordFactory, ModelFactory, StatusView;
 
   ModelFactory = require('model/Factory');
 
-  RecordFactory = require('view/dungeon/record/Factory');
+  DungeonRecordFactory = require('view/dungeon/record/Factory');
 
   DungeonLogView = require('view/dungeon/Log');
 
@@ -104,7 +104,7 @@
       rows = modelRecords.get_all();
       for (_i = 0, _len = rows.length; _i < _len; _i++) {
         row = rows[_i];
-        r = RecordFactory.get(row);
+        r = DungeonRecordFactory.get(row);
         rowData.push(r.get());
         rowObjects.push(r);
       }

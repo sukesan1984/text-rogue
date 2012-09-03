@@ -1,7 +1,7 @@
 RecordEnemy = require 'view/dungeon/record/Enemy'
 RecordItem = require 'view/dungeon/record/Item'
 
-Factory = new class
+DungeonRecordFactory = new class
     get: ( row )->
         switch row.type
             when 1 then return new RecordEnemy( row )
@@ -9,4 +9,4 @@ Factory = new class
             else
                 return new RecordEnemy( row )
 
-module.exports = Factory
+module.exports = DungeonRecordFactory

@@ -1,5 +1,5 @@
 ModelFactory   = require 'model/Factory'
-RecordFactory  = require 'view/dungeon/record/Factory'
+DungeonRecordFactory  = require 'view/dungeon/record/Factory'
 DungeonLogView = require 'view/dungeon/Log'
 StatusView     = require 'view/dungeon/Status'
 
@@ -84,7 +84,7 @@ class DungeonController
         modelRecords = ModelFactory.get( "Records" )
         rows = modelRecords.get_all()
         for row in rows
-            r = RecordFactory.get( row )
+            r = DungeonRecordFactory.get( row )
             rowData.push r.get()
             rowObjects.push r
         @_rowData = rowData
