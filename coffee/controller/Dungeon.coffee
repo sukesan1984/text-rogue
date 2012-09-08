@@ -2,6 +2,8 @@ ModelFactory   = require 'model/Factory'
 DungeonRecordFactory  = require 'view/dungeon/record/Factory'
 DungeonLogView = require 'view/dungeon/Log'
 StatusView     = require 'view/dungeon/Status'
+Styles = require 'view/layout/DungeonStyle'
+styles = Styles.get()
 
 class DungeonController
     constructor :->
@@ -12,20 +14,17 @@ class DungeonController
             backgroundColor: '#FFFFFF'
 
         @win.hideNavBar()
-        @dungeonLogView = new DungeonLogView()
+        logTableView = Ti.UI.createTableView( styles['log'] )
+        @dungeonLogView = new DungeonLogView( logTableView )
         @dungeonLogView.appendedTo @win
 
-        @statusView = new StatusView()
+        statusView = Ti.UI.createView( styles['status'] )
+        @statusView = new StatusView( statusView )
         @statusView.appendedTo @win
         @statusView.addObserver 'click', ( e, pushed )=>
             @dungeonLogView.onClick( e, pushed )
 
-        @goButton = Ti.UI.createButton
-            systemButton: Ti.UI.iPhone.SystemButton.DONE
-            height: 50
-            width: 300
-            bottom: 10
-            title: "GO"
+        @goButton = Ti.UI.createButton( styles['go'] )
 
         @goButton.addEventListener 'click', (e)=>
             @.countUpTurn()

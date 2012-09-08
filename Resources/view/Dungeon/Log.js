@@ -5,12 +5,8 @@
 
   DungeonLogView = (function() {
 
-    function DungeonLogView() {
-      this._tableView = new ETableView(this);
-      this._tableViewObj = this._tableView.getObject();
-      this._tableViewObj.top = 30;
-      this._tableViewObj.setRowHeight(60);
-      this._tableViewObj.setHeight(300);
+    function DungeonLogView(tableView) {
+      this._tableView = tableView;
       return this;
     }
 
@@ -25,16 +21,17 @@
     };
 
     DungeonLogView.prototype.onClick = function(e, pushed) {
-      console.log("pushed" + pushed);
+      var top;
+      top = this._tableView.getTop();
       if (pushed === false) {
-        return this._tableView.setTop(100);
+        return this._tableView.setTop(top + 70);
       } else {
-        return this._tableView.setTop(30);
+        return this._tableView.setTop(top - 70);
       }
     };
 
     DungeonLogView.prototype.appendedTo = function(win) {
-      return win.add(this._tableViewObj);
+      return win.add(this._tableView);
     };
 
     DungeonLogView.prototype.setData = function(rowData) {

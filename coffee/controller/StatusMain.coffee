@@ -1,4 +1,4 @@
-Styles = require 'view/StatusMainStyle'
+Styles = require 'view/layout/StatusMainStyle'
 styles = Styles.get()
 
 class StatusMainController

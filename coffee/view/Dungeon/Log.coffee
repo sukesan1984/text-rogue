@@ -1,25 +1,21 @@
 ETableView = require 'ui/ETableView'
 class DungeonLogView
-    constructor: ->
-        @_tableView = new ETableView( @ )
-        @_tableViewObj = @_tableView.getObject()
-        @_tableViewObj.top = 30
-        @_tableViewObj.setRowHeight 60
-        @_tableViewObj.setHeight 300
+    constructor: ( tableView )->
+        @_tableView = tableView
         return @
 
     deleteAll: ( rowData )->
         for r in rowData
             @_tableView.deleteRow[0]
     onClick: ( e, pushed )->
-        console.log("pushed" + pushed)
+        top = @_tableView.getTop()
         if pushed is false
-            @_tableView.setTop 100
+            @_tableView.setTop ( top ) + 70
         else
-            @_tableView.setTop 30
+            @_tableView.setTop ( top ) - 70
 
     appendedTo: ( win )->
-        win.add @_tableViewObj
+        win.add @_tableView
 
     setData: ( rowData )->
         @_tableView.setData( rowData )

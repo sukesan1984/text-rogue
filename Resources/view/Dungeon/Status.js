@@ -5,14 +5,9 @@
 
   StatusView = (function() {
 
-    function StatusView() {
+    function StatusView(statusView) {
       var _this = this;
-      this._statusView = Ti.UI.createView({
-        height: 30,
-        top: 0,
-        left: 0,
-        right: 0
-      });
+      this._statusView = statusView;
       this._pushed = false;
       this._clickObserver = [];
       this.modelPlayerInstance = ModelFactory.get("PlayerInstance");

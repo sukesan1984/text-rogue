@@ -1,5 +1,5 @@
 (function() {
-  var DungeonController, DungeonLogView, DungeonRecordFactory, ModelFactory, StatusView;
+  var DungeonController, DungeonLogView, DungeonRecordFactory, ModelFactory, StatusView, Styles, styles;
 
   ModelFactory = require('model/Factory');
 
@@ -9,10 +9,15 @@
 
   StatusView = require('view/dungeon/Status');
 
+  Styles = require('view/layout/DungeonStyle');
+
+  styles = Styles.get();
+
   DungeonController = (function() {
 
     function DungeonController() {
-      var _this = this;
+      var logTableView, statusView,
+        _this = this;
       this._turn = 0;
       this._rowData = [];
       this._rowObjects = [];
@@ -20,20 +25,16 @@
         backgroundColor: '#FFFFFF'
       });
       this.win.hideNavBar();
-      this.dungeonLogView = new DungeonLogView();
+      logTableView = Ti.UI.createTableView(styles['log']);
+      this.dungeonLogView = new DungeonLogView(logTableView);
       this.dungeonLogView.appendedTo(this.win);
-      this.statusView = new StatusView();
+      statusView = Ti.UI.createView(styles['status']);
+      this.statusView = new StatusView(statusView);
       this.statusView.appendedTo(this.win);
       this.statusView.addObserver('click', function(e, pushed) {
         return _this.dungeonLogView.onClick(e, pushed);
       });
-      this.goButton = Ti.UI.createButton({
-        systemButton: Ti.UI.iPhone.SystemButton.DONE,
-        height: 50,
-        width: 300,
-        bottom: 10,
-        title: "GO"
-      });
+      this.goButton = Ti.UI.createButton(styles['go']);
       this.goButton.addEventListener('click', function(e) {
         _this.countUpTurn();
         _this.notify("action");

@@ -1,11 +1,7 @@
 ModelFactory = require 'model/Factory'
 class StatusView
-    constructor: ()->
-        @_statusView = Ti.UI.createView
-            height:30
-            top:0
-            left:0
-            right:0
+    constructor: ( statusView )->
+        @_statusView = statusView
 
         @_pushed = false
         @_clickObserver = []

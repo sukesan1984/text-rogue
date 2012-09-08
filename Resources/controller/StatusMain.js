@@ -1,7 +1,7 @@
 (function() {
   var StatusMainController, Styles, styles;
 
-  Styles = require('view/StatusMainStyle');
+  Styles = require('view/layout/StatusMainStyle');
 
   styles = Styles.get();
 
