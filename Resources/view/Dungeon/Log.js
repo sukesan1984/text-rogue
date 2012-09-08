@@ -20,7 +20,7 @@
       return _results;
     };
 
-    DungeonLogView.prototype.onClick = function(e, pushed) {
+    DungeonLogView.prototype.onStatusClick = function(e, pushed) {
       var top;
       top = this._tableView.getTop();
       if (pushed === false) {

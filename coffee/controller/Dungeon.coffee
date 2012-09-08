@@ -22,7 +22,7 @@ class DungeonController
         @statusView = new StatusView( statusView )
         @statusView.appendedTo @win
         @statusView.addObserver 'click', ( e, pushed )=>
-            @dungeonLogView.onClick( e, pushed )
+            @dungeonLogView.onStatusClick( e, pushed )
 
         @goButton = Ti.UI.createButton( styles['go'] )
 

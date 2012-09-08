@@ -7,7 +7,7 @@ class DungeonLogView
     deleteAll: ( rowData )->
         for r in rowData
             @_tableView.deleteRow[0]
-    onClick: ( e, pushed )->
+    onStatusClick: ( e, pushed )->
         top = @_tableView.getTop()
         if pushed is false
             @_tableView.setTop ( top ) + 70

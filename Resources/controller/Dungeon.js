@@ -32,7 +32,7 @@
       this.statusView = new StatusView(statusView);
       this.statusView.appendedTo(this.win);
       this.statusView.addObserver('click', function(e, pushed) {
-        return _this.dungeonLogView.onClick(e, pushed);
+        return _this.dungeonLogView.onStatusClick(e, pushed);
       });
       this.goButton = Ti.UI.createButton(styles['go']);
       this.goButton.addEventListener('click', function(e) {

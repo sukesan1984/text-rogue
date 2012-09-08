@@ -17,7 +17,7 @@
       this.modelItemMaster = ModelFactory.get("ItemMaster");
       this.item_master = this.modelItemMaster.get_by_id(this.item_data.item_id);
       RecordItem.__super__.constructor.call(this, row);
-      this.message.setText(this.item_master.name + "を見つけた");
+      this.message.setText(this.item_master.name + "繧定ｦ九▽縺代◆");
     }
 
     RecordItem.prototype._backgroundImage = function() {
@@ -32,7 +32,7 @@
       this.model["delete"](this.id);
       dialog = Titanium.UI.createAlertDialog();
       dialog.setTitle('GET');
-      dialog.setMessage(this.item_master.name + 'をげっとした');
+      dialog.setMessage(this.item_master.name + '繧偵£縺｣縺ｨ縺励◆');
       return dialog.show();
     };
 
