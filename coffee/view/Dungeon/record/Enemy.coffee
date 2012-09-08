@@ -12,15 +12,17 @@ class RecordEnemy extends RecordBase
         return @
     _backgroundImage: ->
         return @enemy_master.image
+    onClick: ( e )->
+        @model.delete( @id )
+        dialog = Titanium.UI.createAlertDialog()
+        dialog.setTitle('YEAHHHHH')
+        dialog.setMessage(@enemy_master.name + 'を倒した。')
+        dialog.show()
+        super( e )
     action: ->
         @modelEnemyData.update
             hp_remain: @enemy_data.hp_remain
             message:@enemy_master.name + "の攻撃！" + @enemy_master.attack + "のダメージ"
             , @id
         return if ( !@row.getHasCheck() )
-        @model.delete( @id )
-        dialog = Titanium.UI.createAlertDialog()
-        dialog.setTitle('YEAHHHHH')
-        dialog.setMessage(@enemy_master.name + 'を倒した。')
-        dialog.show()
 module.exports = RecordEnemy

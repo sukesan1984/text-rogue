@@ -5,10 +5,10 @@ class RecordBase
     constructor: ( row ) ->
         @row = new ETableViewRow()
         @row.addEventListener 'click', (e)=>
-            check = @row.getHasCheck()
-            @row.setHasCheck !check
+            @.onClick()
         @model = ModelFactory.get( "ModelRecords" )
         @id = row.id
+        @_clickObserver = []
 
         @message =  Ti.UI.createLabel
             color: '#576996'
@@ -42,6 +42,15 @@ class RecordBase
         @setImage()
         @row.add @photo
         return @
+    addObserver: ( event, func )->
+        switch event
+            when "click"
+                @_clickObserver.push func
+            else
+                @_clickObserver.push func
+    onClick: ( e )->
+        for f in @_clickObserver
+            f( e )
     get: ->
         return @row.getObject()
     getName: ->

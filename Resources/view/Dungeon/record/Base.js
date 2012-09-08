@@ -11,12 +11,11 @@
       var _this = this;
       this.row = new ETableViewRow();
       this.row.addEventListener('click', function(e) {
-        var check;
-        check = _this.row.getHasCheck();
-        return _this.row.setHasCheck(!check);
+        return _this.onClick();
       });
       this.model = ModelFactory.get("ModelRecords");
       this.id = row.id;
+      this._clickObserver = [];
       this.message = Ti.UI.createLabel({
         color: '#576996',
         font: {
@@ -53,6 +52,26 @@
       this.row.add(this.photo);
       return this;
     }
+
+    RecordBase.prototype.addObserver = function(event, func) {
+      switch (event) {
+        case "click":
+          return this._clickObserver.push(func);
+        default:
+          return this._clickObserver.push(func);
+      }
+    };
+
+    RecordBase.prototype.onClick = function(e) {
+      var f, _i, _len, _ref, _results;
+      _ref = this._clickObserver;
+      _results = [];
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        f = _ref[_i];
+        _results.push(f(e));
+      }
+      return _results;
+    };
 
     RecordBase.prototype.get = function() {
       return this.row.getObject();

@@ -84,6 +84,8 @@ class DungeonController
         rows = modelRecords.get_all()
         for row in rows
             r = DungeonRecordFactory.get( row )
+            r.addObserver 'click', (e) => 
+                @.reload()
             rowData.push r.get()
             rowObjects.push r
         @_rowData = rowData

@@ -26,20 +26,24 @@
       return this.enemy_master.image;
     };
 
-    RecordEnemy.prototype.action = function() {
+    RecordEnemy.prototype.onClick = function(e) {
       var dialog;
+      this.model["delete"](this.id);
+      dialog = Titanium.UI.createAlertDialog();
+      dialog.setTitle('YEAHHHHH');
+      dialog.setMessage(this.enemy_master.name + 'を倒した。');
+      dialog.show();
+      return RecordEnemy.__super__.onClick.call(this, e);
+    };
+
+    RecordEnemy.prototype.action = function() {
       this.modelEnemyData.update({
         hp_remain: this.enemy_data.hp_remain,
         message: this.enemy_master.name + "の攻撃！" + this.enemy_master.attack + "のダメージ"
       }, this.id);
       if (!this.row.getHasCheck()) {
-        return;
+
       }
-      this.model["delete"](this.id);
-      dialog = Titanium.UI.createAlertDialog();
-      dialog.setTitle('YEAHHHHH');
-      dialog.setMessage(this.enemy_master.name + 'を倒した。');
-      return dialog.show();
     };
 
     return RecordEnemy;

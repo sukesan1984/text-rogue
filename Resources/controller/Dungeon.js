@@ -97,7 +97,8 @@
     };
 
     DungeonController.prototype.reload = function() {
-      var modelRecords, r, row, rowData, rowObjects, rows, _i, _len;
+      var modelRecords, r, row, rowData, rowObjects, rows, _i, _len,
+        _this = this;
       rowData = [];
       rowObjects = [];
       this.dungeonLogView.deleteAll(this._rowData);
@@ -106,6 +107,9 @@
       for (_i = 0, _len = rows.length; _i < _len; _i++) {
         row = rows[_i];
         r = DungeonRecordFactory.get(row);
+        r.addObserver('click', function(e) {
+          return _this.reload();
+        });
         rowData.push(r.get());
         rowObjects.push(r);
       }

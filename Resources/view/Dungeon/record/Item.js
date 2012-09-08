@@ -17,23 +17,27 @@
       this.modelItemMaster = ModelFactory.get("ItemMaster");
       this.item_master = this.modelItemMaster.get_by_id(this.item_data.item_id);
       RecordItem.__super__.constructor.call(this, row);
-      this.message.setText(this.item_master.name + "繧定ｦ九▽縺代◆");
+      this.message.setText(this.item_master.name + "を見つけた");
     }
 
     RecordItem.prototype._backgroundImage = function() {
       return this.item_master.image;
     };
 
-    RecordItem.prototype.action = function() {
+    RecordItem.prototype.onClick = function(e) {
       var dialog;
-      if (!this.row.getHasCheck()) {
-        return;
-      }
       this.model["delete"](this.id);
       dialog = Titanium.UI.createAlertDialog();
       dialog.setTitle('GET');
-      dialog.setMessage(this.item_master.name + '繧偵£縺｣縺ｨ縺励◆');
-      return dialog.show();
+      dialog.setMessage(this.item_master.name + 'を手に入れた');
+      dialog.show();
+      return RecordItem.__super__.onClick.call(this, e);
+    };
+
+    RecordItem.prototype.action = function() {
+      if (!this.row.getHasCheck()) {
+
+      }
     };
 
     return RecordItem;
