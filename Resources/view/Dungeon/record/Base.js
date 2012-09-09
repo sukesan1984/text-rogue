@@ -14,6 +14,7 @@
         return _this.onClick();
       });
       this.model = ModelFactory.get("ModelRecords");
+      this.modelLogsInstance = ModelFactory.get("LogsInstance");
       this.id = row.id;
       this._clickObserver = [];
       this.message = Ti.UI.createLabel({

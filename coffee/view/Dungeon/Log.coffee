@@ -1,23 +1,24 @@
-ETableView = require 'ui/ETableView'
+ModelFactory = require 'model/Factory'
 class DungeonLogView
-    constructor: ( tableView )->
-        @_tableView = tableView
+    constructor: ( logView )->
+        @_logView = logView
         return @
-
-    deleteAll: ( rowData )->
-        for r in rowData
-            @_tableView.deleteRow[0]
     onStatusClick: ( e, pushed )->
-        top = @_tableView.getTop()
+        top = @_logView.getTop()
         if pushed is false
-            @_tableView.setTop ( top ) + 70
+            @_logView.setTop ( top ) + 70
         else
-            @_tableView.setTop ( top ) - 70
+            @_logView.setTop ( top ) - 70
 
+    setText: ()->
+        @modelLogsInstance = ModelFactory.get("LogsInstance")
+        result = @modelLogsInstance.getCurrent( 3 )
+        text = ''
+        for t in result
+            text = t.text + '\n' + text
+
+        @_logView.setText text
     appendedTo: ( win )->
-        win.add @_tableView
-
-    setData: ( rowData )->
-        @_tableView.setData( rowData )
+        win.add @_logView
 
 module.exports = DungeonLogView

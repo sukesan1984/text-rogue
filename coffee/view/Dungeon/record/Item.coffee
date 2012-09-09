@@ -7,15 +7,12 @@ class RecordItem extends RecordBase
         @modelItemMaster = ModelFactory.get("ItemMaster")
         @item_master = @modelItemMaster.get_by_id( @item_data.item_id )
         super(row)
-        @message.setText @item_master.name + "を見つけた"
+        @message.setText @item_master.name + "をみつけた"
     _backgroundImage: ->
         return @item_master.image
     onClick: ( e )->
         @model.delete( @id )
-        dialog = Titanium.UI.createAlertDialog()
-        dialog.setTitle('GET')
-        dialog.setMessage(@item_master.name + 'を手に入れた')
-        dialog.show()
+        @modelLogsInstance.insert( 1, @item_master.name + 'をてにいれた')
         super( e )
     action: ->
         return if ( !@row.getHasCheck() )

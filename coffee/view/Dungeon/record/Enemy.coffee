@@ -14,10 +14,7 @@ class RecordEnemy extends RecordBase
         return @enemy_master.image
     onClick: ( e )->
         @model.delete( @id )
-        dialog = Titanium.UI.createAlertDialog()
-        dialog.setTitle('YEAHHHHH')
-        dialog.setMessage(@enemy_master.name + 'を倒した。')
-        dialog.show()
+        @modelLogsInstance.insert( 2, @enemy_master.name + 'を倒した。')
         super( e )
     action: ->
         @modelEnemyData.update

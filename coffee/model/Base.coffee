@@ -9,4 +9,11 @@ class ModelBase
         @db.close()
     get_rand: (max) ->
         rand = parseInt(Math.random()*max)
+    get_time: ->
+        if (@date)
+            return @date.getTime()
+        else
+            @date = new Date()
+            return @date.getTime()
+
 module.exports = ModelBase

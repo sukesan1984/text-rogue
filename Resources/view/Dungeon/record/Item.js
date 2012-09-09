@@ -17,7 +17,7 @@
       this.modelItemMaster = ModelFactory.get("ItemMaster");
       this.item_master = this.modelItemMaster.get_by_id(this.item_data.item_id);
       RecordItem.__super__.constructor.call(this, row);
-      this.message.setText(this.item_master.name + "を見つけた");
+      this.message.setText(this.item_master.name + "をみつけた");
     }
 
     RecordItem.prototype._backgroundImage = function() {
@@ -25,12 +25,8 @@
     };
 
     RecordItem.prototype.onClick = function(e) {
-      var dialog;
       this.model["delete"](this.id);
-      dialog = Titanium.UI.createAlertDialog();
-      dialog.setTitle('GET');
-      dialog.setMessage(this.item_master.name + 'を手に入れた');
-      dialog.show();
+      this.modelLogsInstance.insert(1, this.item_master.name + 'をてにいれた');
       return RecordItem.__super__.onClick.call(this, e);
     };
 

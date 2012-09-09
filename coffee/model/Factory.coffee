@@ -2,6 +2,7 @@ Records = require 'model/instance/Fields'
 Enemy = require 'model/instance/Enemy'
 PlayerInstance = require 'model/instance/Player'
 ItemInstance = require 'model/instance/Item'
+LogsInstance = require 'model/instance/Logs'
 EnemyMaster = require 'model/master/Enemy'
 EnemyMapMaster = require 'model/master/EnemyMap'
 ItemMaster = require 'model/master/Item'
@@ -20,6 +21,8 @@ ModelFactory = new class
                 @_models[name] = new PlayerInstance()
             when "ItemInstance"
                 @_models[name] = new ItemInstance()
+            when "LogsInstance"
+                @_models[name] = new LogsInstance()
             when "EnemyMaster"
                 @_models[name] = new EnemyMaster()
             when "EnemyMapMaster"

@@ -27,12 +27,8 @@
     };
 
     RecordEnemy.prototype.onClick = function(e) {
-      var dialog;
       this.model["delete"](this.id);
-      dialog = Titanium.UI.createAlertDialog();
-      dialog.setTitle('YEAHHHHH');
-      dialog.setMessage(this.enemy_master.name + 'を倒した。');
-      dialog.show();
+      this.modelLogsInstance.insert(2, this.enemy_master.name + 'を倒した。');
       return RecordEnemy.__super__.onClick.call(this, e);
     };
 

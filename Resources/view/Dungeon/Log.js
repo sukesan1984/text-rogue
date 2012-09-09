@@ -1,41 +1,39 @@
 (function() {
-  var DungeonLogView, ETableView;
+  var DungeonLogView, ModelFactory;
 
-  ETableView = require('ui/ETableView');
+  ModelFactory = require('model/Factory');
 
   DungeonLogView = (function() {
 
-    function DungeonLogView(tableView) {
-      this._tableView = tableView;
+    function DungeonLogView(logView) {
+      this._logView = logView;
       return this;
     }
 
-    DungeonLogView.prototype.deleteAll = function(rowData) {
-      var r, _i, _len, _results;
-      _results = [];
-      for (_i = 0, _len = rowData.length; _i < _len; _i++) {
-        r = rowData[_i];
-        _results.push(this._tableView.deleteRow[0]);
-      }
-      return _results;
-    };
-
     DungeonLogView.prototype.onStatusClick = function(e, pushed) {
       var top;
-      top = this._tableView.getTop();
+      top = this._logView.getTop();
       if (pushed === false) {
-        return this._tableView.setTop(top + 70);
+        return this._logView.setTop(top + 70);
       } else {
-        return this._tableView.setTop(top - 70);
+        return this._logView.setTop(top - 70);
       }
+    };
+
+    DungeonLogView.prototype.setText = function() {
+      var result, t, text, _i, _len;
+      this.modelLogsInstance = ModelFactory.get("LogsInstance");
+      result = this.modelLogsInstance.getCurrent(3);
+      text = '';
+      for (_i = 0, _len = result.length; _i < _len; _i++) {
+        t = result[_i];
+        text = t.text + '\n' + text;
+      }
+      return this._logView.setText(text);
     };
 
     DungeonLogView.prototype.appendedTo = function(win) {
-      return win.add(this._tableView);
-    };
-
-    DungeonLogView.prototype.setData = function(rowData) {
-      return this._tableView.setData(rowData);
+      return win.add(this._logView);
     };
 
     return DungeonLogView;

@@ -1,5 +1,6 @@
 ModelFactory   = require 'model/Factory'
 DungeonRecordFactory  = require 'view/dungeon/record/Factory'
+DungeonFieldView = require 'view/dungeon/Field'
 DungeonLogView = require 'view/dungeon/Log'
 StatusView     = require 'view/dungeon/Status'
 Styles = require 'view/layout/DungeonStyle'
@@ -14,15 +15,21 @@ class DungeonController
             backgroundColor: '#FFFFFF'
 
         @win.hideNavBar()
-        logTableView = Ti.UI.createTableView( styles['log'] )
-        @dungeonLogView = new DungeonLogView( logTableView )
-        @dungeonLogView.appendedTo @win
+        fieldTableView = Ti.UI.createTableView( styles['field'] )
+        @dungeonFieldView = new DungeonFieldView( fieldTableView )
+        @dungeonFieldView.appendedTo @win
 
         statusView = Ti.UI.createView( styles['status'] )
         @statusView = new StatusView( statusView )
         @statusView.appendedTo @win
         @statusView.addObserver 'click', ( e, pushed )=>
-            @dungeonLogView.onStatusClick( e, pushed )
+            @dungeonFieldView.onStatusClick( e, pushed )
+
+        logView = Ti.UI.createLabel( styles['log'] )
+        @logView = new DungeonLogView( logView )
+        @logView.appendedTo @win
+        @statusView.addObserver 'click', ( e, pushed )=>
+            @logView.onStatusClick( e, pushed )
 
         @goButton = Ti.UI.createButton( styles['go'] )
 
@@ -78,7 +85,7 @@ class DungeonController
         rowData = []
         rowObjects = []
 
-        @dungeonLogView.deleteAll( @_rowData )
+        @dungeonFieldView.deleteAll( @_rowData )
 
         modelRecords = ModelFactory.get( "Records" )
         rows = modelRecords.get_all()
@@ -90,7 +97,8 @@ class DungeonController
             rowObjects.push r
         @_rowData = rowData
         @_rowObjects = rowObjects
-        @dungeonLogView.setData(rowData)
+        @dungeonFieldView.setData(rowData)
+        @logView.setText()
 
     countUpTurn: ->
         @_turn++

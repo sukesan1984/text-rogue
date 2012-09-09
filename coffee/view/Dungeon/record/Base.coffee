@@ -7,6 +7,7 @@ class RecordBase
         @row.addEventListener 'click', (e)=>
             @.onClick()
         @model = ModelFactory.get( "ModelRecords" )
+        @modelLogsInstance = ModelFactory.get( "LogsInstance" )
         @id = row.id
         @_clickObserver = []
 

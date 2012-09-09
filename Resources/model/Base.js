@@ -22,6 +22,15 @@
       return rand = parseInt(Math.random() * max);
     };
 
+    ModelBase.prototype.get_time = function() {
+      if (this.date) {
+        return this.date.getTime();
+      } else {
+        this.date = new Date();
+        return this.date.getTime();
+      }
+    };
+
     return ModelBase;
 
   })();

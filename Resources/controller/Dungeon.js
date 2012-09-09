@@ -1,9 +1,11 @@
 (function() {
-  var DungeonController, DungeonLogView, DungeonRecordFactory, ModelFactory, StatusView, Styles, styles;
+  var DungeonController, DungeonFieldView, DungeonLogView, DungeonRecordFactory, ModelFactory, StatusView, Styles, styles;
 
   ModelFactory = require('model/Factory');
 
   DungeonRecordFactory = require('view/dungeon/record/Factory');
+
+  DungeonFieldView = require('view/dungeon/Field');
 
   DungeonLogView = require('view/dungeon/Log');
 
@@ -16,7 +18,7 @@
   DungeonController = (function() {
 
     function DungeonController() {
-      var logTableView, statusView,
+      var fieldTableView, logView, statusView,
         _this = this;
       this._turn = 0;
       this._rowData = [];
@@ -25,14 +27,20 @@
         backgroundColor: '#FFFFFF'
       });
       this.win.hideNavBar();
-      logTableView = Ti.UI.createTableView(styles['log']);
-      this.dungeonLogView = new DungeonLogView(logTableView);
-      this.dungeonLogView.appendedTo(this.win);
+      fieldTableView = Ti.UI.createTableView(styles['field']);
+      this.dungeonFieldView = new DungeonFieldView(fieldTableView);
+      this.dungeonFieldView.appendedTo(this.win);
       statusView = Ti.UI.createView(styles['status']);
       this.statusView = new StatusView(statusView);
       this.statusView.appendedTo(this.win);
       this.statusView.addObserver('click', function(e, pushed) {
-        return _this.dungeonLogView.onStatusClick(e, pushed);
+        return _this.dungeonFieldView.onStatusClick(e, pushed);
+      });
+      logView = Ti.UI.createLabel(styles['log']);
+      this.logView = new DungeonLogView(logView);
+      this.logView.appendedTo(this.win);
+      this.statusView.addObserver('click', function(e, pushed) {
+        return _this.logView.onStatusClick(e, pushed);
       });
       this.goButton = Ti.UI.createButton(styles['go']);
       this.goButton.addEventListener('click', function(e) {
@@ -101,7 +109,7 @@
         _this = this;
       rowData = [];
       rowObjects = [];
-      this.dungeonLogView.deleteAll(this._rowData);
+      this.dungeonFieldView.deleteAll(this._rowData);
       modelRecords = ModelFactory.get("Records");
       rows = modelRecords.get_all();
       for (_i = 0, _len = rows.length; _i < _len; _i++) {
@@ -115,7 +123,8 @@
       }
       this._rowData = rowData;
       this._rowObjects = rowObjects;
-      return this.dungeonLogView.setData(rowData);
+      this.dungeonFieldView.setData(rowData);
+      return this.logView.setText();
     };
 
     DungeonController.prototype.countUpTurn = function() {
