@@ -12,6 +12,9 @@
     __extends(RecordItem, _super);
 
     function RecordItem(row) {
+      this.sound = Ti.Media.createSound({
+        url: 'sound/item_get.wav'
+      });
       this.modelItemInstance = ModelFactory.get("ItemInstance");
       this.item_data = this.modelItemInstance.get_by_id(row.id);
       this.modelItemMaster = ModelFactory.get("ItemMaster");
@@ -25,6 +28,7 @@
     };
 
     RecordItem.prototype.onClick = function(e) {
+      this.sound.play();
       this.model["delete"](this.id);
       this.modelLogsInstance.insert(1, this.item_master.name + 'をてにいれた');
       return RecordItem.__super__.onClick.call(this, e);
