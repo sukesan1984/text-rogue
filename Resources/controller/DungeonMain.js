@@ -70,10 +70,20 @@
     };
 
     DungeonMainController.prototype._goNextTurn = function(e) {
+      this.reset();
       this.countUpTurn();
       this.notify("action");
       this.reload();
       this._setMock();
+    };
+
+    DungeonMainController.prototype.reset = function() {
+      var player;
+      player = ModelFactory.get("PlayerInstance").get();
+      if (player.hp_remain > 0) {
+        return;
+      }
+      return this.goTown();
     };
 
     DungeonMainController.prototype._setMock = function() {
@@ -168,6 +178,13 @@
       dungeon = ModelFactory.get("DungeonMaster").get_by_id(id);
       dungeonController = new DungeonController(dungeon);
       return dungeonController.open(2);
+    };
+
+    DungeonMainController.prototype.goTown = function() {
+      var TownController, townController;
+      TownController = require('controller/Town');
+      townController = new TownController();
+      return townController.open();
     };
 
     DungeonMainController.prototype.goNextFloor = function() {

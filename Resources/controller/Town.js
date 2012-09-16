@@ -4,11 +4,13 @@
   TownController = (function() {
 
     function TownController() {
-      var DungeonMainController, ItemController, StatusMainController, Tab, params;
+      var DungeonMainController, ItemController, ModelFactory, StatusMainController, Tab, params;
       Tab = require("view/Tab");
       StatusMainController = require("controller/StatusMain");
       ItemController = require("controller/Item");
       DungeonMainController = require("controller/DungeonMain");
+      ModelFactory = require('model/Factory');
+      ModelFactory.initiate();
       this.tabGroup = new Tab();
       params = [
         {

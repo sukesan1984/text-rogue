@@ -55,11 +55,16 @@ class DungeonMainController
         @.reload()
 
     _goNextTurn: ( e )=>
+        @.reset()
         @.countUpTurn()
         @.notify( "action" )
         @.reload()
         @._setMock()
         return
+    reset: ->
+        player = ModelFactory.get("PlayerInstance").get()
+        return if player.hp_remain > 0
+        @.goTown()
 
     _setMock: ->
         rand = parseInt(Math.random()*100)
@@ -129,7 +134,12 @@ class DungeonMainController
         DungeonController = require 'controller/Dungeon'
         dungeon = ModelFactory.get("DungeonMaster").get_by_id( id )
         dungeonController = new DungeonController( dungeon )
+
         dungeonController.open( 2 )
+    goTown: ()->
+        TownController = require 'controller/Town'
+        townController = new TownController()
+        townController.open()
 
     goNextFloor: ->
         # refactoring

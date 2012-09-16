@@ -35,9 +35,11 @@
       switch (name) {
         case "Fields":
           this._models[name] = new Fields();
+          this._instances.push(this._models[name]);
           break;
         case "Enemy":
           this._models[name] = new Enemy();
+          this._instances.push(this._models[name]);
           break;
         case "PlayerInstance":
           this._models[name] = new PlayerInstance();

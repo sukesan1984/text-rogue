@@ -17,8 +17,10 @@ ModelFactory = new class
         switch name
             when "Fields"
                 @_models[name] = new Fields()
+                @_instances.push @_models[name]
             when "Enemy"
                 @_models[name] = new Enemy()
+                @_instances.push @_models[name]
             when "PlayerInstance"
                 @_models[name] = new PlayerInstance()
                 @_instances.push @_models[name]

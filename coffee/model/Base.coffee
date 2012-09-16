@@ -7,7 +7,8 @@ class ModelBase
         return @db.execute.apply(@db, arguments)
     load: ->
     initiate: ->
-        @.execute('DELETE FROM' + @.getTableName)
+        sql = 'DELETE FROM ' + @.getTableName()
+        @.execute( sql )
         @.load()
         @.close()
     close: ->

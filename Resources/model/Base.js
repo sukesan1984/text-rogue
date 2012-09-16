@@ -16,7 +16,9 @@
     ModelBase.prototype.load = function() {};
 
     ModelBase.prototype.initiate = function() {
-      this.execute('DELETE FROM' + this.getTableName);
+      var sql;
+      sql = 'DELETE FROM ' + this.getTableName();
+      this.execute(sql);
       this.load();
       return this.close();
     };

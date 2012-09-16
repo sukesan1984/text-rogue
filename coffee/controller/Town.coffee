@@ -1,9 +1,12 @@
+
 class TownController
     constructor: ->
         Tab = require "view/Tab"
         StatusMainController = require "controller/StatusMain"
         ItemController = require "controller/Item"
         DungeonMainController = require "controller/DungeonMain"
+        ModelFactory = require 'model/Factory'
+        ModelFactory.initiate()
 
         @tabGroup = new Tab()
 
