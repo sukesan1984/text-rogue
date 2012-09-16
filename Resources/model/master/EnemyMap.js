@@ -23,24 +23,30 @@
       this.insert({
         dungeon_id: 1,
         floor: 1,
+        enemy_id: 3,
+        probability: 100
+      });
+      this.insert({
+        dungeon_id: 1,
+        floor: 2,
         enemy_id: 1,
         probability: 10
       });
       this.insert({
         dungeon_id: 1,
-        floor: 1,
+        floor: 2,
         enemy_id: 2,
         probability: 30
       });
       this.insert({
         dungeon_id: 1,
-        floor: 1,
+        floor: 2,
         enemy_id: 3,
         probability: 30
       });
       return this.insert({
         dungeon_id: 1,
-        floor: 1,
+        floor: 2,
         enemy_id: 4,
         probability: 30
       });

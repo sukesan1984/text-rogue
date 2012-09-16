@@ -6,14 +6,17 @@ class StatusView
         @_pushed = false
         @_clickObserver = []
         @modelPlayerInstance = ModelFactory.get("PlayerInstance")
-        @_player = @modelPlayerInstance.get()
-        @_set_name()
-        @_set_hp()
-        @_set_equipment()
+        @_load()
         @_statusView.addEventListener 'click', (e)=>
             @onClick( e )
         return @
-    _set_name:->
+    _load:->
+        @_player = @modelPlayerInstance.get()
+        @_setup_name()
+        @_setup_hp()
+        @_setup_equipment()
+
+    _setup_name:->
         @_name = Ti.UI.createLabel
             color: '#576996'
             font:
@@ -27,7 +30,7 @@ class StatusView
             text: @_player.name
         @_statusView.add @_name
 
-    _set_hp:->
+    _setup_hp:->
         @_hp = Ti.UI.createLabel
             color: '#576996'
             font:
@@ -43,7 +46,12 @@ class StatusView
         text = "HP" +  @_player.hp_remain + "/" + @_player.hp_max
         @_hp.setText text
         @_statusView.add @_hp
-    _set_equipment:->
+    _set_hp: ()->
+        @_player = @modelPlayerInstance.get()
+        text = "HP" +  @_player.hp_remain + "/" + @_player.hp_max
+        @_hp.setText text
+
+    _setup_equipment:->
         @_equipment = Ti.UI.createLabel
             color: '#576996'
             font:
@@ -142,5 +150,7 @@ class StatusView
             f( e, @_pushed )
             
         @_pushed = if @_pushed then false else true
+    reload: ->
+        @_set_hp()
 
 module.exports = StatusView

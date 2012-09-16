@@ -1,5 +1,6 @@
 (function() {
-  var DungeonController, DungeonFieldView, DungeonLogView, DungeonRecordFactory, ModelFactory, StatusView, Styles, styles;
+  var DungeonController, DungeonFieldView, DungeonLogView, DungeonRecordFactory, ModelFactory, StatusView, Styles, styles,
+    __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 
   ModelFactory = require('model/Factory');
 
@@ -18,6 +19,8 @@
   DungeonController = (function() {
 
     function DungeonController(args) {
+      this._goNextTurn = __bind(this._goNextTurn, this);
+
       var fieldTableView, logView, statusView,
         _this = this;
       this._turn = 0;
@@ -45,15 +48,19 @@
       });
       this.goButton = Ti.UI.createButton(styles['go']);
       this.goButton.addEventListener('click', function(e) {
-        _this.countUpTurn();
-        _this.notify("action");
-        _this.reload();
-        _this._setMock();
+        return _this._goNextTurn(e);
       });
       this._setMock();
       this.win.add(this.goButton);
       return this.win;
     }
+
+    DungeonController.prototype._goNextTurn = function(e) {
+      this.countUpTurn();
+      this.notify("action");
+      this.reload();
+      this._setMock();
+    };
 
     DungeonController.prototype._setMock = function() {
       var e_master, enemy_id, i_master, id, item_id, modelEnemyData, modelEnemyMaster, modelFields, modelItemInstance, modelItemMaster, modelSeq, rand;
@@ -121,8 +128,9 @@
         r.addObserver('click', function(e, r) {
           _this.reload();
           if (r.type === 3) {
-            return _this.goNextFloor();
+            _this.goNextFloor();
           }
+          return _this._goNextTurn(e);
         });
         rowData.push(r.get());
         rowObjects.push(r);
@@ -130,6 +138,7 @@
       this._rowData = rowData;
       this._rowObjects = rowObjects;
       this.dungeonFieldView.setData(rowData);
+      this.statusView.reload();
       return this.logView.setText();
     };
 

@@ -37,16 +37,19 @@ class DungeonController
         @goButton = Ti.UI.createButton( styles['go'] )
 
         @goButton.addEventListener 'click', (e)=>
-            @.countUpTurn()
-            @.notify( "action" )
-            @.reload()
-            @._setMock()
-            return
+            @._goNextTurn( e )
 
         @_setMock()
 
         @win.add @goButton
         return @win
+    _goNextTurn: ( e )=>
+        @.countUpTurn()
+        @.notify( "action" )
+        @.reload()
+        @._setMock()
+        return
+
     _setMock: ->
         rand = parseInt(Math.random()*100)
         modelFields = ModelFactory.get( "Fields" )
@@ -99,11 +102,13 @@ class DungeonController
             r.addObserver 'click', ( e, r )  =>
                 @.reload()
                 @.goNextFloor() if ( r.type == 3 ) #refactoring
+                @._goNextTurn( e )
             rowData.push r.get()
             rowObjects.push r
         @_rowData = rowData
         @_rowObjects = rowObjects
         @dungeonFieldView.setData(rowData)
+        @statusView.reload()
         @logView.setText()
     goNextFloor: ->
         # refactoring

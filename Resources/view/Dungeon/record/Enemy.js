@@ -15,6 +15,7 @@
       this.modelEnemyData = ModelFactory.get("Enemy");
       this.enemy_data = this.modelEnemyData.get_by_id(row.id);
       this.modelEnemyMaster = ModelFactory.get("EnemyMaster");
+      this.modelPlayer = ModelFactory.get("PlayerInstance");
       this.enemy_master = this.modelEnemyMaster.get_by_id(this.enemy_data.enemy_id);
       RecordEnemy.__super__.constructor.call(this, row);
       this.message.setText(this.enemy_data.message);
@@ -27,18 +28,35 @@
     };
 
     RecordEnemy.prototype.onClick = function(e) {
-      this.model["delete"](this.id);
-      this.modelLogsInstance.insert(2, this.enemy_master.name + 'を倒した。');
+      var currentHp, damage, player;
+      player = this.modelPlayer.get();
+      damage = player.base_attack;
+      currentHp = this.enemy_data.hp_remain - damage;
+      if (currentHp <= 0) {
+        this.model["delete"](this.id);
+        this.modelLogsInstance.insert(2, this.enemy_master.name + 'を倒した。');
+      } else {
+        this.modelLogsInstance.insert(2, this.enemy_master.name + "に" + damage + "のダメージ");
+        this.modelEnemyData.update({
+          hp_remain: currentHp,
+          message: ""
+        }, this.id);
+      }
       return RecordEnemy.__super__.onClick.call(this, e);
     };
 
     RecordEnemy.prototype.action = function() {
+      var damage, player, player_hp;
+      player = this.modelPlayer.get();
+      damage = this.enemy_master.attack;
+      player_hp = player.hp_remain - damage;
+      this.modelPlayer.update_hp(player_hp);
       this.modelEnemyData.update({
         hp_remain: this.enemy_data.hp_remain,
         message: this.enemy_master.name + "の攻撃！" + this.enemy_master.attack + "のダメージ"
       }, this.id);
-      if (!this.row.getHasCheck()) {
-
+      if (player_hp <= 0) {
+        return this.modelLogsInstance.insert(4, "あなたは死んだ");
       }
     };
 

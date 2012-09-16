@@ -11,6 +11,8 @@ class PlayerInstance extends ModelBase
                 , hp_remain integer
                 , hp_max integer
                 , exp integer
+                , base_attack integer
+                , base_defence integer
                 , hungry_remain integer
                 , hungry_max integer
             )
@@ -26,10 +28,12 @@ class PlayerInstance extends ModelBase
             level: 1
             hp_remain: 30
             hp_max: 30
+            base_attack: 2
+            base_defence: 2
             exp: 0
             hungry_remain: 100
             hungry_max: 100
-    reduce_hp: ( hp )->
+    update_hp: ( hp )->
         id = 1
         sql = '''
             UPDATE
@@ -40,6 +44,7 @@ class PlayerInstance extends ModelBase
                 id = ?
         '''
         @.execute( sql, hp, id )
+        @cache.hp_remain = hp
         @.close()
     insert: ( d )->
         sql = '''
@@ -51,6 +56,8 @@ class PlayerInstance extends ModelBase
             , hp_remain
             , hp_max
             , exp
+            , base_attack
+            , base_defence
             , hungry_remain
             , hungry_max
         )
@@ -64,9 +71,11 @@ class PlayerInstance extends ModelBase
             , ?
             , ?
             , ?
+            , ?
+            , ?
         )
         '''
-        @.execute( sql, d.id, d.name, d.level, d.hp_remain, d.hp_max,  d.exp, d.hungry_remain, d.hungry_max )
+        @.execute( sql, d.id, d.name, d.level, d.hp_remain, d.hp_max,  d.exp, d.base_attack, d.base_defence, d.hungry_remain, d.hungry_max )
         @.close()
 
     get: ->
@@ -81,12 +90,14 @@ class PlayerInstance extends ModelBase
             hp_remain: rows.fieldByName('hp_remain')
             hp_max: rows.fieldByName('hp_max')
             exp: rows.fieldByName('exp')
+            base_attack: rows.fieldByName('base_attack')
+            base_defence: rows.fieldByName('base_defence')
             hungry_remain: rows.fieldByName('hungry_remain')
             hungry_max: rows.fieldByName('hungry_max')
         rows.close()
         @.close()
         console.log( JSON.stringify(result))
-        @result = result #最初の一回だけdbから読み込んでキャッシュする。
-        return @result
+        @cache = result #最初の一回だけdbから読み込んでキャッシュする。
+        return @cache
 
 module.exports = PlayerInstance

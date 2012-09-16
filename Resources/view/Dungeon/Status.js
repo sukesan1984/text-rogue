@@ -11,17 +11,21 @@
       this._pushed = false;
       this._clickObserver = [];
       this.modelPlayerInstance = ModelFactory.get("PlayerInstance");
-      this._player = this.modelPlayerInstance.get();
-      this._set_name();
-      this._set_hp();
-      this._set_equipment();
+      this._load();
       this._statusView.addEventListener('click', function(e) {
         return _this.onClick(e);
       });
       return this;
     }
 
-    StatusView.prototype._set_name = function() {
+    StatusView.prototype._load = function() {
+      this._player = this.modelPlayerInstance.get();
+      this._setup_name();
+      this._setup_hp();
+      return this._setup_equipment();
+    };
+
+    StatusView.prototype._setup_name = function() {
       this._name = Ti.UI.createLabel({
         color: '#576996',
         font: {
@@ -38,7 +42,7 @@
       return this._statusView.add(this._name);
     };
 
-    StatusView.prototype._set_hp = function() {
+    StatusView.prototype._setup_hp = function() {
       var text;
       this._hp = Ti.UI.createLabel({
         color: '#576996',
@@ -58,7 +62,14 @@
       return this._statusView.add(this._hp);
     };
 
-    StatusView.prototype._set_equipment = function() {
+    StatusView.prototype._set_hp = function() {
+      var text;
+      this._player = this.modelPlayerInstance.get();
+      text = "HP" + this._player.hp_remain + "/" + this._player.hp_max;
+      return this._hp.setText(text);
+    };
+
+    StatusView.prototype._setup_equipment = function() {
       this._equipment = Ti.UI.createLabel({
         color: '#576996',
         font: {
@@ -169,6 +180,10 @@
         f(e, this._pushed);
       }
       return this._pushed = this._pushed ? false : true;
+    };
+
+    StatusView.prototype.reload = function() {
+      return this._set_hp();
     };
 
     return StatusView;
