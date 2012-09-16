@@ -12,6 +12,8 @@ class Fields extends ModelBase
         @.execute(sql)
         @.execute('DELETE FROM field_data')
         @.close()
+    getTableName: ->
+        return 'field_data'
     insert: ( id, type )->
         @.execute('INSERT INTO field_data (id, type) values ( ?, ? )', id, type )
         @.close()

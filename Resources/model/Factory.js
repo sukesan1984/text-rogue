@@ -1,5 +1,5 @@
 (function() {
-  var Enemy, EnemyMapMaster, EnemyMaster, FieldSequencial, Fields, ItemInstance, ItemMaster, LogsInstance, ModelFactory, PlayerInstance;
+  var DungeonMaster, Enemy, EnemyMapMaster, EnemyMaster, FieldSequencial, Fields, ItemInstance, ItemMaster, LogsInstance, ModelFactory, PlayerInstance;
 
   Fields = require('model/instance/Fields');
 
@@ -17,12 +17,15 @@
 
   ItemMaster = require('model/master/Item');
 
+  DungeonMaster = require('model/master/Dungeon');
+
   FieldSequencial = require('model/FieldSequencial');
 
   ModelFactory = new ((function() {
 
     function _Class() {
       this._models = {};
+      this._instances = [];
     }
 
     _Class.prototype.get = function(name) {
@@ -38,12 +41,15 @@
           break;
         case "PlayerInstance":
           this._models[name] = new PlayerInstance();
+          this._instances.push(this._models[name]);
           break;
         case "ItemInstance":
           this._models[name] = new ItemInstance();
+          this._instances.push(this._models[name]);
           break;
         case "LogsInstance":
           this._models[name] = new LogsInstance();
+          this._instances.push(this._models[name]);
           break;
         case "EnemyMaster":
           this._models[name] = new EnemyMaster();
@@ -54,6 +60,9 @@
         case "ItemMaster":
           this._models[name] = new ItemMaster();
           break;
+        case "DungeonMaster":
+          this._models[name] = new DungeonMaster();
+          break;
         case "FieldSequencial":
           this._models[name] = new FieldSequencial();
           break;
@@ -61,6 +70,17 @@
           this._models[name] = new Fields();
       }
       return this._models[name];
+    };
+
+    _Class.prototype.initiate = function() {
+      var instance, _i, _len, _ref, _results;
+      _ref = this._instances;
+      _results = [];
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        instance = _ref[_i];
+        _results.push(instance.initiate());
+      }
+      return _results;
     };
 
     return _Class;

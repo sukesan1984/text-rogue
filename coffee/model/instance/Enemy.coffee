@@ -15,6 +15,8 @@ class Enemy extends ModelBase
         @.execute(sql)
         @.execute('DELETE FROM enemy_data')
         @.close()
+    getTableName: ->
+        return "enemy_data"
     insert: ( id, e )->
         sql = '''
             INSERT INTO enemy_data

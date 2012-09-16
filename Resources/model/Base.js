@@ -13,6 +13,14 @@
       return this.db.execute.apply(this.db, arguments);
     };
 
+    ModelBase.prototype.load = function() {};
+
+    ModelBase.prototype.initiate = function() {
+      this.execute('DELETE FROM' + this.getTableName);
+      this.load();
+      return this.close();
+    };
+
     ModelBase.prototype.close = function() {
       return this.db.close();
     };

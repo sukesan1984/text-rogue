@@ -13,6 +13,8 @@ class ItemInstance extends ModelBase
         @.execute( sql )
         @.execute( 'DELETE FROM item_data')
         @.close()
+    getTableName:->
+        return "item_data"
     insert: (id, i)->
         sql = '''
         INSERT INTO item_data

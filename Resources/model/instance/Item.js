@@ -18,6 +18,10 @@
       this.close();
     }
 
+    ItemInstance.prototype.getTableName = function() {
+      return "item_data";
+    };
+
     ItemInstance.prototype.insert = function(id, i) {
       var sql;
       sql = 'INSERT INTO item_data\n(\n    id\n    , item_id\n)\nVALUES\n(\n    ?\n    , ?\n)';

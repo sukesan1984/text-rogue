@@ -33,6 +33,8 @@ class PlayerInstance extends ModelBase
             exp: 0
             hungry_remain: 100
             hungry_max: 100
+    getTableName: ->
+        return 'player_data'
     update_hp: ( hp )->
         id = 1
         sql = '''

@@ -17,6 +17,10 @@
       this.close();
     }
 
+    Fields.prototype.getTableName = function() {
+      return 'field_data';
+    };
+
     Fields.prototype.insert = function(id, type) {
       this.execute('INSERT INTO field_data (id, type) values ( ?, ? )', id, type);
       return this.close();

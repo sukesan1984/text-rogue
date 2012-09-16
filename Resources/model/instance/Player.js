@@ -34,6 +34,10 @@
       });
     };
 
+    PlayerInstance.prototype.getTableName = function() {
+      return 'player_data';
+    };
+
     PlayerInstance.prototype.update_hp = function(hp) {
       var id, sql;
       id = 1;
