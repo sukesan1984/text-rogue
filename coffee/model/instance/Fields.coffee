@@ -18,6 +18,8 @@ class Fields extends ModelBase
     delete: ( id ) ->
         @.execute( "DELETE FROM field_data where id = ?", id )
         @.close()
+    deleteAll: ->
+        @.execute( "DELETE FROM field_data" )
     get_all: ->
         rows = @.execute('SELECT id, type FROM field_data')
         result = []

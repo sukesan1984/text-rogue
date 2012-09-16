@@ -9,6 +9,7 @@ class RecordBase
         @model = ModelFactory.get( "ModelRecords" )
         @modelLogsInstance = ModelFactory.get( "LogsInstance" )
         @id = row.id
+        @type = row.type
         @_clickObserver = []
 
         @message =  Ti.UI.createLabel
@@ -51,7 +52,7 @@ class RecordBase
                 @_clickObserver.push func
     onClick: ( e )->
         for f in @_clickObserver
-            f( e )
+            f( e, @ )
     get: ->
         return @row.getObject()
     getName: ->

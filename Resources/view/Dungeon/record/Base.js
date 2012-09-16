@@ -16,6 +16,7 @@
       this.model = ModelFactory.get("ModelRecords");
       this.modelLogsInstance = ModelFactory.get("LogsInstance");
       this.id = row.id;
+      this.type = row.type;
       this._clickObserver = [];
       this.message = Ti.UI.createLabel({
         color: '#576996',
@@ -69,7 +70,7 @@
       _results = [];
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
         f = _ref[_i];
-        _results.push(f(e));
+        _results.push(f(e, this));
       }
       return _results;
     };

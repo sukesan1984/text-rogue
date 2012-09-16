@@ -5,6 +5,9 @@ do ->
     StatusMainController = require "controller/StatusMain"
     ItemController = require "controller/Item"
     DungeonController = require "controller/Dungeon"
+
+    tabGroup = new Tab()
+
     # Tab Parameter
     params = [{
         title: "ステータス"
@@ -14,9 +17,9 @@ do ->
         window: new ItemController("持ち物")
     },{
         title: "ダンジョン"
-        window: new DungeonController()
+        window: new DungeonController
+            containingTab: tabGroup.tabGroup
     }]
     # Start
-    tabGroup = new Tab()
     tabGroup.appendTabs params
     tabGroup.open()

@@ -16,6 +16,17 @@
       return this.table_view_row.remove(child);
     };
 
+    ETableViewRow.prototype.setHasChild = function(hasChild) {
+      if (hasChild === (true | false)) {
+        return;
+      }
+      return this.table_view_row.setHasChild(hasChild);
+    };
+
+    ETableViewRow.prototype.getHasChild = function() {
+      return this.table_view_row.getHasChild;
+    };
+
     ETableViewRow.prototype.setHasCheck = function(hasCheck) {
       if (hasCheck === (true | false)) {
         return;

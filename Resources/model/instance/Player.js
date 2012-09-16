@@ -32,6 +32,14 @@
       });
     };
 
+    PlayerInstance.prototype.reduce_hp = function(hp) {
+      var id, sql;
+      id = 1;
+      sql = 'UPDATE\n    player_data\nSET\n    hp_remain = ?\nWHERE\n    id = ?';
+      this.execute(sql, hp, id);
+      return this.close();
+    };
+
     PlayerInstance.prototype.insert = function(d) {
       var sql;
       sql = 'INSERT INTO player_data\n(\n    id\n    , name\n    , level\n    , hp_remain\n    , hp_max\n    , exp\n    , hungry_remain\n    , hungry_max\n)\nVALUES\n(\n    ?\n    , ?\n    , ?\n    , ?\n    , ?\n    , ?\n    , ?\n    , ?\n)';
@@ -41,6 +49,9 @@
 
     PlayerInstance.prototype.get = function() {
       var result, rows;
+      if (this.result) {
+        return this.result;
+      }
       rows = this.execute('SELECT * FROM player_data');
       if (!rows.isValidRow()) {
         return;
@@ -58,7 +69,8 @@
       rows.close();
       this.close();
       console.log(JSON.stringify(result));
-      return result;
+      this.result = result;
+      return this.result;
     };
 
     return PlayerInstance;

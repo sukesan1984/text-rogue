@@ -7,10 +7,13 @@ Styles = require 'view/layout/DungeonStyle'
 styles = Styles.get()
 
 class DungeonController
-    constructor :->
+    constructor : ( args )->
         @_turn = 0
         @_rowData = []
         @_rowObjects = []
+
+        @containingTab = args.containingTab
+
         @win = Ti.UI.createWindow
             backgroundColor: '#FFFFFF'
 
@@ -46,7 +49,7 @@ class DungeonController
         return @win
     _setMock: ->
         rand = parseInt(Math.random()*100)
-        modelRecords = ModelFactory.get( "Records" )
+        modelFields = ModelFactory.get( "Fields" )
         modelSeq = ModelFactory.get( "FieldSequencial" )
         id = modelSeq.get()
         if ( rand <= 50 )
@@ -57,14 +60,16 @@ class DungeonController
             e_master = modelEnemyMaster.get_by_id( enemy_id )
             modelEnemyData = ModelFactory.get("Enemy")
             modelEnemyData.insert(id, e_master )
-            modelRecords.insert( id, 1)
-        else if( rand <= 100)
+            modelFields.insert( id, 1)
+        else if( rand <= 90)
             item_id = @._get_item_id( rand )
             modelItemMaster = ModelFactory.get("ItemMaster")
             i_master = modelItemMaster.get_by_id( item_id )
             modelItemInstance = ModelFactory.get("ItemInstance")
             modelItemInstance.insert(id, i_master)
-            modelRecords.insert( id, 2)
+            modelFields.insert( id, 2)
+        else if( rand <= 100)
+            modelFields.insert( id, 3)
         else
 
         @reload()
@@ -87,19 +92,27 @@ class DungeonController
 
         @dungeonFieldView.deleteAll( @_rowData )
 
-        modelRecords = ModelFactory.get( "Records" )
-        rows = modelRecords.get_all()
+        modelFields = ModelFactory.get( "Fields" )
+        rows = modelFields.get_all()
         for row in rows
             r = DungeonRecordFactory.get( row )
-            r.addObserver 'click', (e) => 
+            r.addObserver 'click', ( e, r )  =>
                 @.reload()
+                @.goNextFloor() if ( r.type == 3 ) #refactoring
             rowData.push r.get()
             rowObjects.push r
         @_rowData = rowData
         @_rowObjects = rowObjects
         @dungeonFieldView.setData(rowData)
         @logView.setText()
-
+    goNextFloor: ->
+        # refactoring
+        modelFields = ModelFactory.get( "Fields" )
+        modelFields.deleteAll()
+        @.reload()
+        win = new DungeonController
+                containingTab: @containingTab
+        @containingTab.activeTab.open win, {animated:true}
     countUpTurn: ->
         @_turn++
 module.exports = DungeonController

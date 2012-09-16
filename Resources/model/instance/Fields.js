@@ -27,6 +27,10 @@
       return this.close();
     };
 
+    Fields.prototype.deleteAll = function() {
+      return this.execute("DELETE FROM field_data");
+    };
+
     Fields.prototype.get_all = function() {
       var result, rows;
       rows = this.execute('SELECT id, type FROM field_data');

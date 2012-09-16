@@ -6,6 +6,7 @@
     StatusMainController = require("controller/StatusMain");
     ItemController = require("controller/Item");
     DungeonController = require("controller/Dungeon");
+    tabGroup = new Tab();
     params = [
       {
         title: "ステータス",
@@ -15,10 +16,11 @@
         window: new ItemController("持ち物")
       }, {
         title: "ダンジョン",
-        window: new DungeonController()
+        window: new DungeonController({
+          containingTab: tabGroup.tabGroup
+        })
       }
     ];
-    tabGroup = new Tab();
     tabGroup.appendTabs(params);
     return tabGroup.open();
   })();

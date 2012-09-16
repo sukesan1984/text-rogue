@@ -17,12 +17,13 @@
 
   DungeonController = (function() {
 
-    function DungeonController() {
+    function DungeonController(args) {
       var fieldTableView, logView, statusView,
         _this = this;
       this._turn = 0;
       this._rowData = [];
       this._rowObjects = [];
+      this.containingTab = args.containingTab;
       this.win = Ti.UI.createWindow({
         backgroundColor: '#FFFFFF'
       });
@@ -55,9 +56,9 @@
     }
 
     DungeonController.prototype._setMock = function() {
-      var e_master, enemy_id, i_master, id, item_id, modelEnemyData, modelEnemyMaster, modelItemInstance, modelItemMaster, modelRecords, modelSeq, rand;
+      var e_master, enemy_id, i_master, id, item_id, modelEnemyData, modelEnemyMaster, modelFields, modelItemInstance, modelItemMaster, modelSeq, rand;
       rand = parseInt(Math.random() * 100);
-      modelRecords = ModelFactory.get("Records");
+      modelFields = ModelFactory.get("Fields");
       modelSeq = ModelFactory.get("FieldSequencial");
       id = modelSeq.get();
       if (rand <= 50) {
@@ -69,14 +70,16 @@
         e_master = modelEnemyMaster.get_by_id(enemy_id);
         modelEnemyData = ModelFactory.get("Enemy");
         modelEnemyData.insert(id, e_master);
-        modelRecords.insert(id, 1);
-      } else if (rand <= 100) {
+        modelFields.insert(id, 1);
+      } else if (rand <= 90) {
         item_id = this._get_item_id(rand);
         modelItemMaster = ModelFactory.get("ItemMaster");
         i_master = modelItemMaster.get_by_id(item_id);
         modelItemInstance = ModelFactory.get("ItemInstance");
         modelItemInstance.insert(id, i_master);
-        modelRecords.insert(id, 2);
+        modelFields.insert(id, 2);
+      } else if (rand <= 100) {
+        modelFields.insert(id, 3);
       } else {
 
       }
@@ -105,18 +108,21 @@
     };
 
     DungeonController.prototype.reload = function() {
-      var modelRecords, r, row, rowData, rowObjects, rows, _i, _len,
+      var modelFields, r, row, rowData, rowObjects, rows, _i, _len,
         _this = this;
       rowData = [];
       rowObjects = [];
       this.dungeonFieldView.deleteAll(this._rowData);
-      modelRecords = ModelFactory.get("Records");
-      rows = modelRecords.get_all();
+      modelFields = ModelFactory.get("Fields");
+      rows = modelFields.get_all();
       for (_i = 0, _len = rows.length; _i < _len; _i++) {
         row = rows[_i];
         r = DungeonRecordFactory.get(row);
-        r.addObserver('click', function(e) {
-          return _this.reload();
+        r.addObserver('click', function(e, r) {
+          _this.reload();
+          if (r.type === 3) {
+            return _this.goNextFloor();
+          }
         });
         rowData.push(r.get());
         rowObjects.push(r);
@@ -125,6 +131,19 @@
       this._rowObjects = rowObjects;
       this.dungeonFieldView.setData(rowData);
       return this.logView.setText();
+    };
+
+    DungeonController.prototype.goNextFloor = function() {
+      var modelFields, win;
+      modelFields = ModelFactory.get("Fields");
+      modelFields.deleteAll();
+      this.reload();
+      win = new DungeonController({
+        containingTab: this.containingTab
+      });
+      return this.containingTab.activeTab.open(win, {
+        animated: true
+      });
     };
 
     DungeonController.prototype.countUpTurn = function() {

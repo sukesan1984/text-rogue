@@ -1,7 +1,7 @@
 (function() {
-  var Enemy, EnemyMapMaster, EnemyMaster, FieldSequencial, ItemInstance, ItemMaster, LogsInstance, ModelFactory, PlayerInstance, Records;
+  var Enemy, EnemyMapMaster, EnemyMaster, FieldSequencial, Fields, ItemInstance, ItemMaster, LogsInstance, ModelFactory, PlayerInstance;
 
-  Records = require('model/instance/Fields');
+  Fields = require('model/instance/Fields');
 
   Enemy = require('model/instance/Enemy');
 
@@ -30,8 +30,8 @@
         return this._models[name];
       }
       switch (name) {
-        case "Records":
-          this._models[name] = new Records();
+        case "Fields":
+          this._models[name] = new Fields();
           break;
         case "Enemy":
           this._models[name] = new Enemy();
@@ -58,7 +58,7 @@
           this._models[name] = new FieldSequencial();
           break;
         default:
-          this._models[name] = new Records();
+          this._models[name] = new Fields();
       }
       return this._models[name];
     };

@@ -29,6 +29,18 @@ class PlayerInstance extends ModelBase
             exp: 0
             hungry_remain: 100
             hungry_max: 100
+    reduce_hp: ( hp )->
+        id = 1
+        sql = '''
+            UPDATE
+                player_data
+            SET
+                hp_remain = ?
+            WHERE
+                id = ?
+        '''
+        @.execute( sql, hp, id )
+        @.close()
     insert: ( d )->
         sql = '''
         INSERT INTO player_data
@@ -58,6 +70,8 @@ class PlayerInstance extends ModelBase
         @.close()
 
     get: ->
+        return @result if ( @result )
+
         rows = @.execute( 'SELECT * FROM player_data' )
         return if ( !rows.isValidRow() )
         result =
@@ -72,6 +86,7 @@ class PlayerInstance extends ModelBase
         rows.close()
         @.close()
         console.log( JSON.stringify(result))
-        return result
+        @result = result #最初の一回だけdbから読み込んでキャッシュする。
+        return @result
 
 module.exports = PlayerInstance

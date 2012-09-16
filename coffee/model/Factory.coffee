@@ -1,4 +1,4 @@
-Records = require 'model/instance/Fields'
+Fields = require 'model/instance/Fields'
 Enemy = require 'model/instance/Enemy'
 PlayerInstance = require 'model/instance/Player'
 ItemInstance = require 'model/instance/Item'
@@ -13,8 +13,8 @@ ModelFactory = new class
     get: (name)->
         return @_models[name] if ( @_models[name] )
         switch name
-            when "Records"
-                @_models[name] = new Records()
+            when "Fields"
+                @_models[name] = new Fields()
             when "Enemy"
                 @_models[name] = new Enemy()
             when "PlayerInstance"
@@ -32,7 +32,7 @@ ModelFactory = new class
             when "FieldSequencial"
                 @_models[name] = new FieldSequencial()
             else
-                @_models[name] = new Records()
+                @_models[name] = new Fields()
                
         return @_models[name]
 
