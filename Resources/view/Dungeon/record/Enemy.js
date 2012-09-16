@@ -12,14 +12,15 @@
     __extends(RecordEnemy, _super);
 
     function RecordEnemy(row) {
+      this.row = row;
       this.modelEnemyData = ModelFactory.get("Enemy");
       this.enemy_data = this.modelEnemyData.get_by_id(row.id);
       this.modelEnemyMaster = ModelFactory.get("EnemyMaster");
       this.modelPlayer = ModelFactory.get("PlayerInstance");
       this.enemy_master = this.modelEnemyMaster.get_by_id(this.enemy_data.enemy_id);
       RecordEnemy.__super__.constructor.call(this, row);
-      this.message.setText(this.enemy_data.message);
-      this.right_bottom.setText(this.enemy_data.hp_remain + "/" + this.enemy_master.hp_max);
+      this.setMessage(this.enemy_data.message);
+      this.setRightBottomText(this.enemy_data.hp_remain + "/" + this.enemy_master.hp_max);
       return this;
     }
 
@@ -28,17 +29,17 @@
     };
 
     RecordEnemy.prototype.onClick = function(e) {
-      var currentHp, damage, player;
+      var damage, player;
       player = this.modelPlayer.get();
       damage = player.base_attack;
-      currentHp = this.enemy_data.hp_remain - damage;
-      if (currentHp <= 0) {
+      this.enemy_data.hp_remain -= damage;
+      if (this.enemy_data.hp_remain <= 0) {
         this.model["delete"](this.id);
         this.modelLogsInstance.insert(2, this.enemy_master.name + 'を倒した。');
       } else {
         this.modelLogsInstance.insert(2, this.enemy_master.name + "に" + damage + "のダメージ");
         this.modelEnemyData.update({
-          hp_remain: currentHp,
+          hp_remain: this.enemy_data.hp_remain,
           message: ""
         }, this.id);
       }

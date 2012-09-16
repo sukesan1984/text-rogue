@@ -77,7 +77,6 @@
       };
       rows.close();
       this.close();
-      console.log(JSON.stringify(result));
       this.cache = result;
       return this.cache;
     };

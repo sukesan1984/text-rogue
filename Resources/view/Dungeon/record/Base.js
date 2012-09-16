@@ -64,6 +64,14 @@
       }
     };
 
+    RecordBase.prototype.setMessage = function(message) {
+      return this.message.setText(message);
+    };
+
+    RecordBase.prototype.setRightBottomText = function(text) {
+      return this.right_bottom.setText(text);
+    };
+
     RecordBase.prototype.onClick = function(e) {
       var f, _i, _len, _ref, _results;
       _ref = this._clickObserver;

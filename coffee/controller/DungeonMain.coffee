@@ -61,6 +61,7 @@ class DungeonMainController
         @.reload()
         @._setMock()
         return
+
     reset: ->
         player = ModelFactory.get("PlayerInstance").get()
         return if player.hp_remain > 0
@@ -91,8 +92,6 @@ class DungeonMainController
             modelFields.insert( id, 3)
         else
 
-        @reload()
-
     _get_item_id: ( seed )->
         if seed <= 70
             return 1
@@ -113,13 +112,17 @@ class DungeonMainController
 
         modelFields = ModelFactory.get( "Fields" )
         rows = modelFields.get_all()
+
         for row in rows
             r = DungeonRecordFactory.get( row )
             r.addObserver 'click', ( e, r )  =>
-                @.reload()
-                @.goNextFloor() if ( r.type == 3 ) #refactoring
-                @.start() if ( r.type == 4 ) # refactoring
-                @._goNextTurn( e )
+                switch r.type 
+                    when 4
+                        @.start()
+                    when 3
+                        @.goNextFloor()
+                    else
+                        @._goNextTurn( e )
             rowData.push r.get()
             rowObjects.push r
         @_rowData = rowData
@@ -134,8 +137,8 @@ class DungeonMainController
         DungeonController = require 'controller/Dungeon'
         dungeon = ModelFactory.get("DungeonMaster").get_by_id( id )
         dungeonController = new DungeonController( dungeon )
-
         dungeonController.open( 2 )
+
     goTown: ()->
         TownController = require 'controller/Town'
         townController = new TownController()
@@ -145,7 +148,6 @@ class DungeonMainController
         # refactoring
         modelFields = ModelFactory.get( "Fields" )
         modelFields.deleteAll()
-        @.reload()
         win = new DungeonMainController
                 containingTab: @containingTab
                 dungeon: @dungeon

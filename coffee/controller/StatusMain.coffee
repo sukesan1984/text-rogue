@@ -3,7 +3,6 @@ styles = Styles.get()
 
 class StatusMainController
     constructor:(titleStr) ->
-        console.log( JSON.stringify( styles ) )
         @win = Ti.UI.createWindow
             title: titleStr
             backgroundColor: "#FFFFFF"

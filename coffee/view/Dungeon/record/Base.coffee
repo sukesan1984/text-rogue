@@ -50,6 +50,11 @@ class RecordBase
                 @_clickObserver.push func
             else
                 @_clickObserver.push func
+    setMessage: ( message )->
+        @message.setText message
+    setRightBottomText: ( text )->
+        @right_bottom.setText text
+
     onClick: ( e )->
         for f in @_clickObserver
             f( e, @ )

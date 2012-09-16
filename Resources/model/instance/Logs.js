@@ -22,7 +22,6 @@
     };
 
     Fields.prototype.insert = function(type, text) {
-      console.log(text);
       this.execute('INSERT INTO log_data (type, text, created_at, updated_at) values ( ?, ?, ?, ? )', type, text, this.get_time(), this.get_time());
       return this.close();
     };

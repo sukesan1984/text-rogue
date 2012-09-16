@@ -14,7 +14,7 @@
     function RecordSelectDungeon(row) {
       RecordSelectDungeon.__super__.constructor.call(this, row);
       this.row.setHasChild(true);
-      this.message.setText("始まりの洞窟ハマジリ");
+      this.setMessage("始まりの洞窟ハマジリ");
     }
 
     RecordSelectDungeon.prototype._backgroundImage = function() {

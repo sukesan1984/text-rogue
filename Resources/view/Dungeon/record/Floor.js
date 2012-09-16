@@ -14,7 +14,7 @@
     function RecordFloor(row) {
       RecordFloor.__super__.constructor.call(this, row);
       this.row.setHasChild(true);
-      this.message.setText("階段だ！");
+      this.setMessage("階段だ！");
     }
 
     RecordFloor.prototype._backgroundImage = function() {

@@ -7,7 +7,7 @@ class RecordItem extends RecordBase
         @modelItemMaster = ModelFactory.get("ItemMaster")
         @item_master = @modelItemMaster.get_by_id( @item_data.item_id )
         super(row)
-        @message.setText @item_master.name + "をみつけた"
+        @.setMessage @item_master.name + "をみつけた"
 
     _backgroundImage: ->
         return @item_master.image

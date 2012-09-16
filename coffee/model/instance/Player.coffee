@@ -98,7 +98,6 @@ class PlayerInstance extends ModelBase
             hungry_max: rows.fieldByName('hungry_max')
         rows.close()
         @.close()
-        console.log( JSON.stringify(result))
         @cache = result #最初の一回だけdbから読み込んでキャッシュする。
         return @cache
 

@@ -101,20 +101,19 @@
         e_master = modelEnemyMaster.get_by_id(enemy_id);
         modelEnemyData = ModelFactory.get("Enemy");
         modelEnemyData.insert(id, e_master);
-        modelFields.insert(id, 1);
+        return modelFields.insert(id, 1);
       } else if (rand <= 90) {
         item_id = this._get_item_id(rand);
         modelItemMaster = ModelFactory.get("ItemMaster");
         i_master = modelItemMaster.get_by_id(item_id);
         modelItemInstance = ModelFactory.get("ItemInstance");
         modelItemInstance.insert(id, i_master);
-        modelFields.insert(id, 2);
+        return modelFields.insert(id, 2);
       } else if (rand <= 100) {
-        modelFields.insert(id, 3);
+        return modelFields.insert(id, 3);
       } else {
 
       }
-      return this.reload();
     };
 
     DungeonMainController.prototype._get_item_id = function(seed) {
@@ -150,14 +149,14 @@
         row = rows[_i];
         r = DungeonRecordFactory.get(row);
         r.addObserver('click', function(e, r) {
-          _this.reload();
-          if (r.type === 3) {
-            _this.goNextFloor();
+          switch (r.type) {
+            case 4:
+              return _this.start();
+            case 3:
+              return _this.goNextFloor();
+            default:
+              return _this._goNextTurn(e);
           }
-          if (r.type === 4) {
-            _this.start();
-          }
-          return _this._goNextTurn(e);
         });
         rowData.push(r.get());
         rowObjects.push(r);
@@ -191,7 +190,6 @@
       var modelFields, win;
       modelFields = ModelFactory.get("Fields");
       modelFields.deleteAll();
-      this.reload();
       win = new DungeonMainController({
         containingTab: this.containingTab,
         dungeon: this.dungeon

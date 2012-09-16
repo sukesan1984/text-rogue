@@ -5,7 +5,7 @@ class RecordFloor extends RecordBase
     constructor: ( row )->
         super( row )
         @row.setHasChild true
-        @message.setText "階段だ！"
+        @.setMessage "階段だ！"
 
     _backgroundImage: ->
         return "images/floor/kaidan.png"

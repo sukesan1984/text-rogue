@@ -8,7 +8,6 @@
   StatusMainController = (function() {
 
     function StatusMainController(titleStr) {
-      console.log(JSON.stringify(styles));
       this.win = Ti.UI.createWindow({
         title: titleStr,
         backgroundColor: "#FFFFFF"

@@ -17,7 +17,7 @@
       this.modelItemMaster = ModelFactory.get("ItemMaster");
       this.item_master = this.modelItemMaster.get_by_id(this.item_data.item_id);
       RecordItem.__super__.constructor.call(this, row);
-      this.message.setText(this.item_master.name + "をみつけた");
+      this.setMessage(this.item_master.name + "をみつけた");
     }
 
     RecordItem.prototype._backgroundImage = function() {

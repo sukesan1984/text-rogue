@@ -18,7 +18,6 @@ class Fields extends ModelBase
     getTableName: ->
         return "log_data"
     insert: ( type, text )->
-        console.log( text )
         @.execute('INSERT INTO log_data (type, text, created_at, updated_at) values ( ?, ?, ?, ? )', type, text, @.get_time(), @.get_time() )
         @.close()
     delete: ( id ) ->

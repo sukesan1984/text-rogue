@@ -5,7 +5,7 @@ class RecordSelectDungeon extends RecordBase
     constructor: ( row )->
         super( row )
         @row.setHasChild true
-        @message.setText "始まりの洞窟ハマジリ"
+        @.setMessage "始まりの洞窟ハマジリ"
     _backgroundImage:->
         return "images/dungeon/hajimari.png"
     onClick: (e)->
