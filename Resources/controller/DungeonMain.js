@@ -81,9 +81,8 @@
       var player;
       player = ModelFactory.get("PlayerInstance").get();
       if (player.hp_remain > 0) {
-        return;
+
       }
-      return this.goTown();
     };
 
     DungeonMainController.prototype._setMock = function() {
@@ -150,9 +149,10 @@
         r = DungeonRecordFactory.get(row);
         r.addObserver('click', function(e, r) {
           switch (r.type) {
-            case 4:
-              return _this.start();
             case 3:
+              return _this.goNextFloor();
+            case 4:
+              _this.dungeon = 1;
               return _this.goNextFloor();
             default:
               return _this._goNextTurn(e);
@@ -166,24 +166,6 @@
       this.dungeonFieldView.setData(rowData);
       this.statusView.reload();
       return this.logView.setText();
-    };
-
-    DungeonMainController.prototype.start = function(id) {
-      var DungeonController, dungeon, dungeonController, modelFields;
-      id || (id = 1);
-      modelFields = ModelFactory.get("Fields");
-      modelFields.deleteAll();
-      DungeonController = require('controller/Dungeon');
-      dungeon = ModelFactory.get("DungeonMaster").get_by_id(id);
-      dungeonController = new DungeonController(dungeon);
-      return dungeonController.open(2);
-    };
-
-    DungeonMainController.prototype.goTown = function() {
-      var TownController, townController;
-      TownController = require('controller/Town');
-      townController = new TownController();
-      return townController.open();
     };
 
     DungeonMainController.prototype.goNextFloor = function() {

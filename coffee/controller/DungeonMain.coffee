@@ -65,7 +65,6 @@ class DungeonMainController
     reset: ->
         player = ModelFactory.get("PlayerInstance").get()
         return if player.hp_remain > 0
-        @.goTown()
 
     _setMock: ->
         rand = parseInt(Math.random()*100)
@@ -116,10 +115,11 @@ class DungeonMainController
         for row in rows
             r = DungeonRecordFactory.get( row )
             r.addObserver 'click', ( e, r )  =>
-                switch r.type 
-                    when 4
-                        @.start()
+                switch r.type
                     when 3
+                        @.goNextFloor()
+                    when 4
+                        @dungeon = 1
                         @.goNextFloor()
                     else
                         @._goNextTurn( e )
@@ -130,19 +130,6 @@ class DungeonMainController
         @dungeonFieldView.setData(rowData)
         @statusView.reload()
         @logView.setText()
-    start: ( id )->
-        id ||= 1
-        modelFields = ModelFactory.get( "Fields" )
-        modelFields.deleteAll()
-        DungeonController = require 'controller/Dungeon'
-        dungeon = ModelFactory.get("DungeonMaster").get_by_id( id )
-        dungeonController = new DungeonController( dungeon )
-        dungeonController.open( 2 )
-
-    goTown: ()->
-        TownController = require 'controller/Town'
-        townController = new TownController()
-        townController.open()
 
     goNextFloor: ->
         # refactoring

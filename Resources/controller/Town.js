@@ -30,6 +30,10 @@
       return this.tabGroup;
     }
 
+    TownController.prototype.destroy = function() {
+      return this.tabGroup.close();
+    };
+
     return TownController;
 
   })();

@@ -13,4 +13,6 @@ class AppTabMods
         self.tabGroup.setActiveTab defaultTabNums
         self.tabGroup.open()
         return
+    close: ->
+        @tabGroup.close()
 module.exports = AppTabMods

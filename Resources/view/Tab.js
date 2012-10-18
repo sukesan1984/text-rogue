@@ -26,6 +26,10 @@
       self.tabGroup.open();
     };
 
+    AppTabMods.prototype.close = function() {
+      return this.tabGroup.close();
+    };
+
     return AppTabMods;
 
   })();

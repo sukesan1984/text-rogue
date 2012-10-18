@@ -1,10 +1,10 @@
 (function() {
 
   (function() {
-    var TownController, townController;
-    TownController = require('controller/Town');
-    townController = new TownController();
-    return townController.open();
+    var DungeonController, dungeonController;
+    DungeonController = require('controller/Dungeon');
+    dungeonController = new DungeonController();
+    return dungeonController.open();
   })();
 
 }).call(this);

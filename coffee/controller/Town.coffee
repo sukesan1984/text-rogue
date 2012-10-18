@@ -1,4 +1,3 @@
-
 class TownController
     constructor: ->
         Tab = require "view/Tab"
@@ -25,5 +24,7 @@ class TownController
         # Start
         @tabGroup.appendTabs params
         return @tabGroup
+    destroy: ->
+        @tabGroup.close()
 
 module.exports = TownController
