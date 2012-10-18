@@ -47,18 +47,22 @@
       this.statusView.addObserver('click', function(e, pushed) {
         return _this.logView.onStatusClick(e, pushed);
       });
-      this.goButton = Ti.UI.createButton(styles['go']);
-      this.goButton.addEventListener('click', function(e) {
-        return _this._goNextTurn(e);
-      });
       if (!this.dungeon) {
         this._startMock();
       } else {
-        this._setMock();
+        this._setNextTurn();
+        this.reload();
       }
-      this.win.add(this.goButton);
       return this.win;
     }
+
+    DungeonMainController.prototype._setNextTurn = function() {
+      var id, modelFields, modelSeq;
+      modelFields = ModelFactory.get("Fields");
+      modelSeq = ModelFactory.get("FieldSequencial");
+      id = modelSeq.get();
+      return modelFields.insert(id, 5);
+    };
 
     DungeonMainController.prototype._startMock = function() {
       var id, modelFields, modelSeq;
@@ -154,6 +158,8 @@
             case 4:
               _this.dungeon = 1;
               return _this.goNextFloor();
+            case 5:
+              return _this._goNextTurn(e);
             default:
               return _this._goNextTurn(e);
           }

@@ -1,5 +1,5 @@
 (function() {
-  var DungeonRecordFactory, RecordEnemy, RecordFloor, RecordItem, RecordSelectDungeon;
+  var DungeonRecordFactory, RecordEnemy, RecordFloor, RecordItem, RecordNextTurn, RecordSelectDungeon;
 
   RecordEnemy = require('view/dungeon/record/Enemy');
 
@@ -8,6 +8,8 @@
   RecordFloor = require('view/dungeon/record/Floor');
 
   RecordSelectDungeon = require('view/dungeon/record/SelectDungeon');
+
+  RecordNextTurn = require('view/dungeon/record/NextTurn');
 
   DungeonRecordFactory = new ((function() {
 
@@ -23,6 +25,8 @@
           return new RecordFloor(row);
         case 4:
           return new RecordSelectDungeon(row);
+        case 5:
+          return new RecordNextTurn(row);
         default:
           return new RecordEnemy(row);
       }

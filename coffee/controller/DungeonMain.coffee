@@ -35,18 +35,20 @@ class DungeonMainController
         @statusView.addObserver 'click', ( e, pushed )=>
             @logView.onStatusClick( e, pushed )
 
-        @goButton = Ti.UI.createButton( styles['go'] )
-
-        @goButton.addEventListener 'click', (e)=>
-            @._goNextTurn( e )
-
         if !@dungeon
             @._startMock()
         else
-            @._setMock()
+            @._setNextTurn()
+            @.reload()
+            #@._setMock()
 
-        @win.add @goButton
         return @win
+    _setNextTurn: ()->
+        modelFields = ModelFactory.get( "Fields" )
+        modelSeq = ModelFactory.get( "FieldSequencial" )
+        id = modelSeq.get()
+        modelFields.insert( id, 5 )
+
     _startMock: ()->
         modelFields = ModelFactory.get( "Fields" )
         modelSeq = ModelFactory.get( "FieldSequencial" )
@@ -91,6 +93,7 @@ class DungeonMainController
             modelFields.insert( id, 3)
         else
 
+
     _get_item_id: ( seed )->
         if seed <= 70
             return 1
@@ -121,6 +124,8 @@ class DungeonMainController
                     when 4
                         @dungeon = 1
                         @.goNextFloor()
+                    when 5
+                        @._goNextTurn( e )
                     else
                         @._goNextTurn( e )
             rowData.push r.get()
