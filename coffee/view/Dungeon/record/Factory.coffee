@@ -3,6 +3,7 @@ RecordItem = require 'view/dungeon/record/Item'
 RecordFloor = require 'view/dungeon/record/Floor'
 RecordSelectDungeon = require 'view/dungeon/record/SelectDungeon'
 RecordNextTurn = require 'view/dungeon/record/NextTurn'
+RecordRecovery = require 'view/dungeon/record/Recovery'
 RecordBase = require 'view/dungeon/record/Base'
 
 DungeonRecordFactory = new class
@@ -13,6 +14,7 @@ DungeonRecordFactory = new class
             when 3 then return new RecordFloor( row )
             when 4 then return new RecordSelectDungeon( row )
             when 5 then return new RecordNextTurn( row )
+            when 6 then return new RecordRecovery( row )
             when 99 then return new RecordBase( row )
             else
                 return new RecordEnemy( row )

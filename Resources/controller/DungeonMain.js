@@ -200,6 +200,8 @@
         modelEnemyData = ModelFactory.get("Enemy");
         modelEnemyData.insert(id, e_master);
         return modelFields.insert(id, 1);
+      } else if (rand <= 70) {
+        return modelFields.insert(id, 6);
       } else if (rand <= 90) {
         item_id = this._get_item_id(rand);
         modelItemMaster = ModelFactory.get("ItemMaster");
@@ -254,6 +256,8 @@
               _this.dungeon = 1;
               return _this.goNextFloor();
             case 5:
+              return _this._goNextTurn(e);
+            case 6:
               return _this._goNextTurn(e);
             default:
               return _this._goNextTurn(e);

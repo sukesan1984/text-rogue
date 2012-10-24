@@ -174,6 +174,8 @@ class DungeonMainController
             modelEnemyData = ModelFactory.get("Enemy")
             modelEnemyData.insert(id, e_master )
             modelFields.insert( id, 1)
+        else if( rand <= 70)
+            modelFields.insert( id, 6 )
         else if( rand <= 90)
             item_id = @._get_item_id( rand )
             modelItemMaster = ModelFactory.get("ItemMaster")
@@ -218,6 +220,8 @@ class DungeonMainController
                         @dungeon = 1
                         @.goNextFloor()
                     when 5
+                        @._goNextTurn( e )
+                    when 6
                         @._goNextTurn( e )
                     else
                         @._goNextTurn( e )
