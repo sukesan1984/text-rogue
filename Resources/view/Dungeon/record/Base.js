@@ -98,7 +98,7 @@
     };
 
     RecordBase.prototype._backgroundImage = function() {
-      return '';
+      return 'images/floor/ashiato.png';
     };
 
     RecordBase.prototype.setImage = function() {

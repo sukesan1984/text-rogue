@@ -28,13 +28,78 @@
       this._rowObjects = [];
       this.containingTab = args.containingTab;
       this.dungeon = args.dungeon;
+      this.pulling = false;
+      this.reloading = false;
       this.win = Ti.UI.createWindow({
         backgroundColor: '#FFFFFF'
       });
       this.win.hideNavBar();
+      this.border = Ti.UI.createView({
+        backgroundColor: "#576c89",
+        height: 2,
+        bottom: 0
+      });
+      this.tableHeader = Ti.UI.createView({
+        backgroundColor: "#e2e7ed",
+        width: 320,
+        height: 60
+      });
+      this.tableHeader.add(this.border);
+      this.arrow = Ti.UI.createView({
+        backgroundImage: "images/ui/whiteArrow.png",
+        width: 23,
+        height: 60,
+        bottom: 10,
+        left: 20
+      });
+      this.statusLabel = Ti.UI.createLabel({
+        text: "ダンジョンの奥へと進む",
+        left: 55,
+        width: 200,
+        bottom: 30,
+        height: "auto",
+        color: "#576c89",
+        textAlign: "center",
+        font: {
+          fontSize: 13,
+          fontWeight: "bold"
+        },
+        shadowColor: "#999",
+        shadowOffset: {
+          x: 0,
+          y: 1
+        }
+      });
+      this.lastUpdatedLabel = Ti.UI.createLabel({
+        text: "このフロアの進捗(1/5) ",
+        left: 55,
+        width: 200,
+        bottom: 15,
+        height: "auto",
+        color: "#576c89",
+        textAlign: "center",
+        font: {
+          fontSize: 12
+        },
+        shadowColor: "#999",
+        shadowOffset: {
+          x: 0,
+          y: 1
+        }
+      });
+      this.tableHeader.add(this.arrow);
+      this.tableHeader.add(this.statusLabel);
+      this.tableHeader.add(this.lastUpdatedLabel);
       fieldTableView = Ti.UI.createTableView(styles['field']);
       this.dungeonFieldView = new DungeonFieldView(fieldTableView);
       this.dungeonFieldView.appendedTo(this.win);
+      fieldTableView.headerPullView = this.tableHeader;
+      fieldTableView.addEventListener('scroll', function(e) {
+        return _this.onTableViewScroll(e);
+      });
+      fieldTableView.addEventListener('scrollEnd', function(e) {
+        return _this.onTableViewScrollEnd(e);
+      });
       statusView = Ti.UI.createView(styles['status']);
       this.statusView = new StatusView(statusView);
       this.statusView.appendedTo(this.win);
@@ -50,11 +115,42 @@
       if (!this.dungeon) {
         this._startMock();
       } else {
-        this._setNextTurn();
         this.reload();
       }
       return this.win;
     }
+
+    DungeonMainController.prototype.onTableViewScroll = function(e) {
+      var offset, t;
+      offset = e.contentOffset.y;
+      if (offset <= -65.0 && !this.pulling) {
+        t = Ti.UI.create2DMatrix();
+        t = t.rotate(-180);
+        this.pulling = true;
+        this.arrow.animate({
+          transform: t,
+          duration: 180
+        });
+        return this.statusLabel.text = "次の部屋へ";
+      } else if (this.pulling && offset > -65.0 && offset < 0) {
+        this.pulling = false;
+        t = Ti.UI.create2DMatrix();
+        this.arrow.animate({
+          transform: t,
+          duration: 180
+        });
+        return this.statusLabel.text = "ダンジョンの奥へと進む";
+      }
+    };
+
+    DungeonMainController.prototype.onTableViewScrollEnd = function(e) {
+      this.reloading = false;
+      this.statusLabel.text = "ダンジョンの奥へと進む";
+      this._goNextTurn();
+      this._setMock();
+      this.reload();
+      return this.arrow.show();
+    };
 
     DungeonMainController.prototype._setNextTurn = function() {
       var id, modelFields, modelSeq;
@@ -78,7 +174,6 @@
       this.countUpTurn();
       this.notify("action");
       this.reload();
-      this._setMock();
     };
 
     DungeonMainController.prototype.reset = function() {
@@ -163,6 +258,25 @@
             default:
               return _this._goNextTurn(e);
           }
+        });
+        rowData.push(r.get());
+        rowObjects.push(r);
+      }
+      this._rowData = rowData;
+      this._rowObjects = rowObjects;
+      this.dungeonFieldView.setData(rowData);
+      this.statusView.reload();
+      return this.logView.setText();
+    };
+
+    DungeonMainController.prototype.reloadMock = function() {
+      var r, row, rowData, rowObjects, _i, _ref;
+      rowData = [];
+      rowObjects = [];
+      for (row = _i = 0, _ref = this._turn; 0 <= _ref ? _i <= _ref : _i >= _ref; row = 0 <= _ref ? ++_i : --_i) {
+        r = DungeonRecordFactory.get({
+          type: 99,
+          id: row
         });
         rowData.push(r.get());
         rowObjects.push(r);

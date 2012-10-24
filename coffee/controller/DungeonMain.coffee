@@ -15,13 +15,78 @@ class DungeonMainController
         @containingTab = args.containingTab
         @dungeon = args.dungeon
 
+        @pulling = false
+        @reloading = false
+
         @win = Ti.UI.createWindow
             backgroundColor: '#FFFFFF'
 
         @win.hideNavBar()
+
+        @border = Ti.UI.createView
+            backgroundColor: "#576c89"
+            height: 2
+            bottom: 0
+
+        @tableHeader = Ti.UI.createView
+            backgroundColor: "#e2e7ed"
+            width: 320
+            height: 60
+
+        @tableHeader.add @border
+
+        @arrow = Ti.UI.createView
+            backgroundImage: "images/ui/whiteArrow.png"
+            width:23
+            height:60
+            bottom:10
+            left:20
+
+        @statusLabel = Ti.UI.createLabel
+            text: "ダンジョンの奥へと進む",
+            left: 55
+            width: 200
+            bottom: 30
+            height: "auto"
+            color: "#576c89"
+            textAlign: "center"
+            font:
+                fontSize:13
+                fontWeight: "bold"
+            shadowColor: "#999"
+            shadowOffset:
+                x:0
+                y:1
+
+        @lastUpdatedLabel = Ti.UI.createLabel
+            text: "このフロアの進捗(1/5) "
+            left: 55
+            width: 200
+            bottom: 15
+            height: "auto"
+            color: "#576c89"
+            textAlign: "center"
+            font:
+                fontSize:12
+            shadowColor: "#999"
+            shadowOffset:
+                x:0
+                y:1
+
+        @tableHeader.add @arrow
+        @tableHeader.add @statusLabel
+        @tableHeader.add @lastUpdatedLabel
+
         fieldTableView = Ti.UI.createTableView( styles['field'] )
         @dungeonFieldView = new DungeonFieldView( fieldTableView )
         @dungeonFieldView.appendedTo @win
+        fieldTableView.headerPullView = @tableHeader
+        fieldTableView.addEventListener 'scroll', (e)=>
+            @.onTableViewScroll( e )
+
+        fieldTableView.addEventListener 'scrollEnd', (e)=>
+            @.onTableViewScrollEnd( e )
+
 
         statusView = Ti.UI.createView( styles['status'] )
         @statusView = new StatusView( statusView )
@@ -29,20 +94,48 @@ class DungeonMainController
         @statusView.addObserver 'click', ( e, pushed )=>
             @dungeonFieldView.onStatusClick( e, pushed )
 
+
         logView = Ti.UI.createLabel( styles['log'] )
         @logView = new DungeonLogView( logView )
         @logView.appendedTo @win
         @statusView.addObserver 'click', ( e, pushed )=>
             @logView.onStatusClick( e, pushed )
 
+
         if !@dungeon
             @._startMock()
         else
-            @._setNextTurn()
+            #@._setNextTurn()
             @.reload()
             #@._setMock()
 
         return @win
+    onTableViewScroll: (e)->
+        offset = e.contentOffset.y
+        if ( offset <= -65.0 && !@pulling )
+            t = Ti.UI.create2DMatrix()
+            t = t.rotate -180
+            @pulling = true
+            @arrow.animate
+                transform: t
+                duration: 180
+            @statusLabel.text = "次の部屋へ"
+        else if ( @pulling && offset > -65.0 && offset < 0 )
+            @pulling = false
+            t = Ti.UI.create2DMatrix()
+            @arrow.animate
+                transform: t
+                duration: 180
+            @statusLabel.text = "ダンジョンの奥へと進む"
+
+    onTableViewScrollEnd: (e)->
+        @reloading = false
+        @statusLabel.text = "ダンジョンの奥へと進む"
+        @_goNextTurn()
+        @._setMock()
+        @.reload()
+        @arrow.show()
+
     _setNextTurn: ()->
         modelFields = ModelFactory.get( "Fields" )
         modelSeq = ModelFactory.get( "FieldSequencial" )
@@ -61,7 +154,6 @@ class DungeonMainController
         @.countUpTurn()
         @.notify( "action" )
         @.reload()
-        @._setMock()
         return
 
     reset: ->
@@ -107,6 +199,7 @@ class DungeonMainController
             i[func]()
 
     reload: ->
+        #return @.reloadMock()
         rowData = []
         rowObjects = []
 
@@ -130,6 +223,22 @@ class DungeonMainController
                         @._goNextTurn( e )
             rowData.push r.get()
             rowObjects.push r
+        @_rowData = rowData
+        @_rowObjects = rowObjects
+        @dungeonFieldView.setData(rowData)
+        @statusView.reload()
+        @logView.setText()
+
+    reloadMock: ->
+        rowData = []
+        rowObjects = []
+        for row in [0..@._turn]
+            r = DungeonRecordFactory.get
+                type: 99
+                id: row
+            rowData.push r.get()
+            rowObjects.push r
+
         @_rowData = rowData
         @_rowObjects = rowObjects
         @dungeonFieldView.setData(rowData)

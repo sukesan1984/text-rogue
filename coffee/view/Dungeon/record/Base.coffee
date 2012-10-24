@@ -65,7 +65,7 @@ class RecordBase
     action: ->
         return if ( !@row.getHasCheck() )
     _backgroundImage: ->
-        return ''
+        return 'images/floor/ashiato.png'
     setImage: ->
         @photo.setBackgroundImage( @_backgroundImage() )
 module.exports = RecordBase
